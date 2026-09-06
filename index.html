@@ -3,162 +3,110 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student Registration - Ultra Neon</title>
+  <title>Calendar Attendance - Ultra Neon</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#05050a">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-    body { background: #05050a; color: #fff; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
-    .neon-card { background: #0d0f1d; border: 2px solid #00f3ff; border-radius: 16px; padding: 30px; width: 100%; max-width: 500px; box-shadow: 0 0 15px #00f3ff, inset 0 0 15px #00f3ff; }
-    h2 { text-align: center; color: #00f3ff; text-shadow: 0 0 10px #00f3ff; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px; }
-
-    /* Top Highlighted Animated Neon Gmail Input Box */
-    .gmail-input-card {
-      background: #121528;
-      border-radius: 12px;
-      padding: 14px;
-      margin-bottom: 22px;
-      border: 2px solid transparent;
-      animation: neonGlow 4s linear infinite alternate;
-    }
-
-    @keyframes neonGlow {
-      0% {
-        border-color: #00f3ff;
-        box-shadow: 0 0 15px #00f3ff, inset 0 0 8px #00f3ff;
-      }
-      33% {
-        border-color: #ff007f;
-        box-shadow: 0 0 15px #ff007f, inset 0 0 8px #ff007f;
-      }
-      66% {
-        border-color: #00ff66;
-        box-shadow: 0 0 15px #00ff66, inset 0 0 8px #00ff66;
-      }
-      100% {
-        border-color: #ff00ff;
-        box-shadow: 0 0 15px #ff00ff, inset 0 0 8px #ff00ff;
-      }
-    }
-
-    .gmail-label-tag {
-      font-size: 11px;
-      font-weight: 800;
-      color: #00ff66;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      text-shadow: 0 0 5px #00ff66;
-      display: block;
-      margin-bottom: 6px;
-    }
-
-    .gmail-input-wrapper {
-      display: flex;
-      align-items: center;
-      background: #191c33;
-      border: 1px solid #00f3ff;
-      border-radius: 8px;
-      padding: 6px 12px;
-      gap: 10px;
-      box-shadow: 0 0 8px rgba(0, 243, 255, 0.3);
-    }
-
-    .gmail-input-wrapper svg {
-      width: 22px;
-      height: 22px;
-      flex-shrink: 0;
-    }
-
-    .gmail-input-wrapper input {
-      width: 100%;
-      background: transparent;
-      border: none;
-      outline: none;
-      color: #fff;
-      font-size: 14px;
-      font-weight: 600;
-      box-shadow: none;
-      padding: 6px 0;
-    }
-
-    .gmail-input-wrapper input::placeholder {
-      color: #7a82a6;
-      font-weight: normal;
-    }
-
-    .form-group { margin-bottom: 18px; }
-    label { display: block; margin-bottom: 8px; color: #ff007f; font-weight: bold; text-shadow: 0 0 5px #ff007f; }
-    input, select { width: 100%; padding: 12px; background: #14172b; border: 1px solid #ff007f; border-radius: 8px; color: #fff; outline: none; box-shadow: 0 0 5px #ff007f; transition: 0.3s; }
-    input:focus, select:focus { border-color: #00f3ff; box-shadow: 0 0 12px #00f3ff; }
+    body { background: #05050a; color: #fff; min-height: 100vh; padding: 25px; display: flex; flex-direction: column; align-items: center; }
+    .main-box { background: #0d0f1d; border: 2px solid #00f3ff; border-radius: 16px; padding: 25px; width: 100%; max-width: 800px; box-shadow: 0 0 20px #00f3ff; }
+    h2 { text-align: center; color: #00f3ff; text-shadow: 0 0 10px #00f3ff; margin-bottom: 20px; text-transform: uppercase; }
+    .colorful-neon-box { position: relative; background: linear-gradient(135deg, #090a15 0%, #150a21 100%); border-radius: 16px; padding: 18px; margin-bottom: 22px; text-align: center; border: 2px solid transparent; animation: gamingNeonGlow 3s infinite linear alternate; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+    @keyframes gamingNeonGlow { 0% { border-color: #00f3ff; box-shadow: 0 0 15px #00f3ff, inset 0 0 12px #00f3ff; } 25% { border-color: #ff007f; box-shadow: 0 0 15px #ff007f, inset 0 0 12px #ff007f; } 50% { border-color: #7f00ff; box-shadow: 0 0 15px #7f00ff, inset 0 0 12px #7f00ff; } 75% { border-color: #00ff66; box-shadow: 0 0 15px #00ff66, inset 0 0 12px #00ff66; } 100% { border-color: #ffaa00; box-shadow: 0 0 15px #ffaa00, inset 0 0 12px #ffaa00; } }
+    .btn-google { background: #ffffff; color: #111; font-weight: 800; padding: 12px 26px; border-radius: 30px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 12px; font-size: 15px; letter-spacing: 0.5px; box-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 25px #00f3ff; transition: all 0.3s ease; text-transform: uppercase; }
+    .btn-google:hover { transform: translateY(-2px) scale(1.05); box-shadow: 0 0 25px rgba(255, 255, 255, 1), 0 0 35px #ff007f; }
+    .user-profile { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; }
+    .user-avatar { width: 46px; height: 46px; border-radius: 50%; border: 2px solid #00ff66; box-shadow: 0 0 10px #00ff66; object-fit: cover; }
+    .user-info { text-align: left; flex-grow: 1; overflow: hidden; }
+    .user-info strong { color: #00f3ff; font-size: 15px; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-shadow: 0 0 5px #00f3ff; }
+    .user-info span { color: #ff007f; font-size: 12px; font-weight: 600; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-shadow: 0 0 5px #ff007f; }
+    .btn-logout { background: transparent; border: 2px solid #ff0055; color: #ff0055; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: bold; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; }
+    .btn-logout:hover { background: #ff0055; color: #fff; box-shadow: 0 0 15px #ff0055; }
+    #attendanceContent { display: none; }
+    .select-container { display: flex; gap: 15px; justify-content: center; align-items: center; flex-wrap: wrap; margin-bottom: 15px; }
+    select { padding: 12px; background: #14172b; border: 2px solid #ff007f; color: #fff; border-radius: 8px; outline: none; box-shadow: 0 0 10px #ff007f; font-size: 15px; min-width: 220px; }
     select option { background: #0d0f1d; color: #fff; }
-    .img-preview { width: 90px; height: 90px; border: 2px dashed #00f3ff; border-radius: 50%; margin: 10px auto 0; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 0 8px #00f3ff; }
-    .img-preview img { width: 100%; height: 100%; object-fit: cover; display: none; }
-    .btn { width: 100%; padding: 14px; background: transparent; border: 2px solid #00ff66; color: #00ff66; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; text-shadow: 0 0 5px #00ff66; box-shadow: 0 0 10px #00ff66; transition: 0.3s; margin-top: 10px; }
-    .btn:hover { background: #00ff66; color: #000; box-shadow: 0 0 25px #00ff66; }
-    .nav-btn { border-color: #ff007f; color: #ff007f; text-shadow: 0 0 5px #ff007f; box-shadow: 0 0 10px #ff007f; }
-    .nav-btn:hover { background: #ff007f; color: #fff; box-shadow: 0 0 25px #ff007f; }
-    #msg { text-align: center; margin-top: 15px; font-weight: bold; }
-    #newSansthaBox { background: #101426; padding: 12px; border: 1px dashed #00f3ff; border-radius: 8px; margin-top: 8px; display: none; }
+    .bulk-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+    .bulk-btn { padding: 10px 16px; background: transparent; font-size: 13px; font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.3s; }
+    .btn-bulk-p { border: 2px solid #00ff66; color: #00ff66; box-shadow: 0 0 8px #00ff66; text-shadow: 0 0 4px #00ff66; }
+    .btn-bulk-p:hover { background: #00ff66; color: #000; }
+    .btn-bulk-a { border: 2px solid #ff0055; color: #ff0055; box-shadow: 0 0 8px #ff0055; text-shadow: 0 0 4px #ff0055; }
+    .btn-bulk-a:hover { background: #ff0055; color: #fff; }
+    .profile-card { display: flex; align-items: center; gap: 15px; background: #14172b; padding: 12px 20px; border-radius: 10px; border: 1px solid #00f3ff; box-shadow: 0 0 10px #00f3ff; margin-bottom: 15px; }
+    .profile-avatar { width: 60px; height: 60px; border-radius: 50%; border: 2px solid #00ff66; object-fit: cover; box-shadow: 0 0 8px #00ff66; background: #05050a; }
+    .profile-info h4 { color: #00ff66; text-shadow: 0 0 5px #00ff66; margin-bottom: 3px; }
+    .profile-info p { font-size: 13px; color: #aaa; }
+    .calendar-header { display: flex; justify-content: space-between; align-items: center; margin: 15px 0; }
+    .cal-btn { background: transparent; border: 1px solid #00ff66; color: #00ff66; padding: 6px 15px; border-radius: 6px; cursor: pointer; box-shadow: 0 0 5px #00ff66; font-weight: bold; }
+    .month-title { font-size: 18px; color: #00ff66; text-shadow: 0 0 5px #00ff66; font-weight: bold; }
+    .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-top: 10px; }
+    .day-name { text-align: center; color: #ff007f; font-weight: bold; padding: 5px; text-shadow: 0 0 5px #ff007f; }
+    .day-cell { background: #14172b; border: 1px solid #1f2440; border-radius: 8px; min-height: 60px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 5px; cursor: pointer; transition: 0.2s; }
+    .day-cell:hover { border-color: #00f3ff; box-shadow: 0 0 8px #00f3ff; }
+    .day-cell.past-date { opacity: 0.4; cursor: not-allowed; border-color: #333; }
+    .day-cell.past-date:hover { border-color: #ff0055; box-shadow: 0 0 5px #ff0055; }
+    .day-number { font-size: 14px; font-weight: bold; color: #aaa; align-self: flex-start; }
+    .status-tag { font-size: 11px; padding: 2px 5px; border-radius: 4px; font-weight: bold; }
+    .status-P { background: rgba(0, 255, 102, 0.2); color: #00ff66; border: 1px solid #00ff66; box-shadow: 0 0 5px #00ff66; }
+    .status-A { background: rgba(255, 0, 85, 0.2); color: #ff0055; border: 1px solid #ff0055; box-shadow: 0 0 5px #ff0055; }
+    .nav-links { margin-top: 25px; display: flex; gap: 15px; justify-content: center; }
+    .btn-link { padding: 10px 20px; background: transparent; border: 2px solid #ff007f; color: #ff007f; font-weight: bold; border-radius: 8px; cursor: pointer; box-shadow: 0 0 10px #ff007f; text-decoration: none; }
+    .btn-link:hover { background: #ff007f; color: #fff; }
+    #accessMessage { text-align: center; color: #ff0055; font-weight: bold; margin-top: 15px; text-shadow: 0 0 8px #ff0055; display: none; }
   </style>
 </head>
 <body>
-  <div class="neon-card">
-
-    <form id="regForm">
-      <!-- Top Highlighted Animated Neon Gmail Input Box -->
-      <div class="gmail-input-card">
-        <span class="gmail-label-tag">Gmail ID for Authentication</span>
-        <div class="gmail-input-wrapper">
-          <svg viewBox="0 0 24 24">
-            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
-          </svg>
-          <input type="email" id="email" placeholder="example@gmail.com" required>
+  <div class="main-box">
+    <div class="colorful-neon-box" id="authBox">
+      <button class="btn-google" id="googleLoginBtn">
+        <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.74-.06-1.28-.19-1.84H9v3.34h4.96c-.1.83-.64 2.08-1.84 2.92l2.84 2.2c1.7-1.57 2.68-3.88 2.68-6.62z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.84-2.2c-.76.53-1.78.9-3.12.9-2.38 0-4.41-1.57-5.13-3.7l-2.9 2.25C2.45 15.82 5.48 18 9 18z"/><path fill="#FBBC05" d="M3.87 10.82c-.18-.53-.28-1.1-.28-1.82s.1-1.29.28-1.82L.97 4.93C.35 6.16 0 7.55 0 9s.35 2.84.97 4.07l2.9-2.25z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0 5.48 0 2.45 2.18.97 4.93l2.9 2.25c.72-2.13 2.75-3.6 5.13-3.6z"/></svg>
+        Sign in with Google
+      </button>
+    </div>
+    <div id="accessMessage">Access Denied: Your Gmail ID is not registered in the database!</div>
+    <div id="attendanceContent">
+      <h2>Calendar Attendance Register</h2>
+      <div class="select-container">
+        <div><select id="sansthaFilter"><option value="">-- All Sanstha --</option></select></div>
+        <div><select id="studentSelect"><option value="">-- Select Student --</option></select></div>
+      </div>
+      <div class="bulk-actions">
+        <button class="bulk-btn btn-bulk-p" id="bulkPresentBtn">Mark All Selected Sanstha Present (Today)</button>
+        <button class="bulk-btn btn-bulk-a" id="bulkAbsentBtn">Mark All Selected Sanstha Absent (Today)</button>
+      </div>
+      <div class="profile-card" id="profileCard" style="display: none;">
+        <img id="profileImg" class="profile-avatar" src="" alt="Student Photo">
+        <div class="profile-info">
+          <h4 id="profileName">Student Name</h4>
+          <p id="profileDetails">Roll: 101 | Course: O Level | Sanstha: ABC</p>
         </div>
       </div>
-
-      <h2>Student Registration</h2>
-
-      <div class="form-group">
-        <label>Select Sanstha / Institute</label>
-        <select id="sansthaSelect" required>
-          <option value="">-- Choose Sanstha --</option>
-          <option value="__ADD_NEW__">+ Add New Sanstha</option>
-        </select>
-        <div id="newSansthaBox">
-          <input type="text" id="newSansthaName" placeholder="Enter New Sanstha Name" style="margin-bottom: 10px;">
-          <input type="password" id="newSansthaPass" placeholder="Set Password for this Sanstha">
-        </div>
+      <div class="calendar-header">
+        <button class="cal-btn" id="prevMonth">&lt; Prev</button>
+        <div class="month-title" id="monthDisplay">Month Year</div>
+        <button class="cal-btn" id="nextMonth">Next &gt;</button>
       </div>
-      <div class="form-group">
-        <label>Roll Number</label>
-        <input type="text" id="roll" placeholder="e.g. 101" required>
+      <div class="calendar-grid">
+        <div class="day-name">Sun</div><div class="day-name">Mon</div><div class="day-name">Tue</div>
+        <div class="day-name">Wed</div><div class="day-name">Thu</div><div class="day-name">Fri</div><div class="day-name">Sat</div>
       </div>
-      <div class="form-group">
-        <label>Full Name</label>
-        <input type="text" id="name" placeholder="Enter Full Name" required>
+      <div class="calendar-grid" id="calendarDays"></div>
+      <div class="nav-links">
+        <a href="index.html" class="btn-link">+ Register Student</a>
+        <a href="records.html" class="btn-link" style="border-color:#00ff66; color:#00ff66; box-shadow:0 0 10px #00ff66;">View Stored Records</a>
       </div>
-      <div class="form-group">
-        <label>Course / Class</label>
-        <input type="text" id="course" placeholder="e.g. O Level / Web Dev" required>
-      </div>
-      <div class="form-group">
-        <label>Student Photo (Optional)</label>
-        <input type="file" id="photo" accept="image/*">
-        <div class="img-preview">
-          <span id="placeholderText" style="font-size: 11px; color: #888;">No Photo</span>
-          <img id="previewImg" alt="Student Preview">
-        </div>
-      </div>
-      <button type="submit" class="btn">Register Student</button>
-      <button type="button" class="btn nav-btn" onclick="location.href='attendance.html'">Open Calendar Attendance</button>
-    </form>
-    <div id="msg"></div>
+    </div>
   </div>
-
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-    import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
+    import { getDatabase, ref, onValue, set, get } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js').then(() => {
+        Notification.requestPermission();
+      });
+    }
 
     const firebaseConfig = {
       apiKey: "AIzaSyDng_-HwKeiwEnda2hvqQ8YX2I9uqrxcug",
@@ -171,101 +119,241 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
 
-    let imageBase64 = "";
+    setPersistence(auth, browserLocalPersistence).catch(err => console.error("Persistence Error:", err));
+
+    let currentDate = new Date();
+    let allStudents = {};
     let sansthaMap = {};
+    let currentAuthorizedSanstha = "";
 
-    const sansthaSelect = document.getElementById('sansthaSelect');
-    const newSansthaBox = document.getElementById('newSansthaBox');
+    const authBox = document.getElementById('authBox');
+    const attendanceContent = document.getElementById('attendanceContent');
+    const accessMessage = document.getElementById('accessMessage');
+    const sansthaFilter = document.getElementById('sansthaFilter');
 
-    onValue(ref(db, 'sansthas'), (snap) => {
-      sansthaMap = snap.val() || {};
-      sansthaSelect.innerHTML = '<option value="">-- Choose Sanstha --</option>';
-      Object.keys(sansthaMap).forEach(key => {
-        const option = document.createElement('option');
-        option.value = key;
-        option.textContent = key;
-        sansthaSelect.appendChild(option);
-      });
-      const addNewOpt = document.createElement('option');
-      addNewOpt.value = "__ADD_NEW__";
-      addNewOpt.textContent = "+ Add New Sanstha";
-      sansthaSelect.appendChild(addNewOpt);
-    });
-
-    sansthaSelect.addEventListener('change', () => {
-      newSansthaBox.style.display = (sansthaSelect.value === "__ADD_NEW__") ? "block" : "none";
-    });
-
-    document.getElementById('photo').addEventListener('change', function(e) {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(evt) {
-          imageBase64 = evt.target.result;
-          const previewImg = document.getElementById('previewImg');
-          previewImg.src = imageBase64;
-          previewImg.style.display = "block";
-          document.getElementById('placeholderText').style.display = "none";
-        };
-        reader.readAsDataURL(file);
-      } else {
-        imageBase64 = "";
-        document.getElementById('previewImg').style.display = "none";
-        document.getElementById('placeholderText').style.display = "block";
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('#googleLoginBtn')) {
+        signInWithPopup(auth, provider).catch(err => alert("Google Auth Error: " + err.message));
+      }
+      if (e.target.closest('#logoutBtn')) {
+        signOut(auth);
       }
     });
 
-    document.getElementById('regForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const msg = document.getElementById('msg');
-      let targetSanstha = sansthaSelect.value;
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const userEmail = user.email.toLowerCase();
+        const studentsSnap = await get(ref(db, 'students'));
+        allStudents = studentsSnap.val() || {};
+        const isRegistered = Object.values(allStudents).some(
+          student => student.email && student.email.toLowerCase() === userEmail
+        );
+        authBox.innerHTML = `
+          <div class="user-profile">
+            <img class="user-avatar" src="${user.photoURL || 'https://via.placeholder.com/40'}" alt="User">
+            <div class="user-info">
+              <strong>${user.displayName || 'User'}</strong>
+              <span>${user.email}</span>
+            </div>
+            <button class="btn-logout" id="logoutBtn">Logout</button>
+          </div>
+        `;
+        if (isRegistered) {
+          accessMessage.style.display = 'none';
+          attendanceContent.style.display = 'block';
+          initAttendanceSystem();
+        } else {
+          attendanceContent.style.display = 'none';
+          accessMessage.style.display = 'block';
+        }
+      } else {
+        authBox.innerHTML = `
+          <button class="btn-google" id="googleLoginBtn">
+            <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.74-.06-1.28-.19-1.84H9v3.34h4.96c-.1.83-.64 2.08-1.84 2.92l2.84 2.2c1.7-1.57 2.68-3.88 2.68-6.62z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.84-2.2c-.76.53-1.78.9-3.12.9-2.38 0-4.41-1.57-5.13-3.7l-2.9 2.25C2.45 15.82 5.48 18 9 18z"/><path fill="#FBBC05" d="M3.87 10.82c-.18-.53-.28-1.1-.28-1.82s.1-1.29.28-1.82L.97 4.93C.35 6.16 0 7.55 0 9s.35 2.84.97 4.07l2.9-2.25z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0 5.48 0 2.45 2.18.97 4.93l2.9 2.25c.72-2.13 2.75-3.6 5.13-3.6z"/></svg>
+            Sign in with Google
+          </button>
+        `;
+        attendanceContent.style.display = 'none';
+        accessMessage.style.display = 'none';
+      }
+    });
 
-      if (!targetSanstha) {
-        alert("Kripya Sanstha select karein ya nayi add karein!");
+    function initAttendanceSystem() {
+      onValue(ref(db, 'sansthas'), (snap) => {
+        sansthaMap = snap.val() || {};
+        sansthaFilter.innerHTML = '<option value="">-- All Sanstha --</option>';
+        Object.keys(sansthaMap).forEach(key => {
+          const option = document.createElement('option');
+          option.value = key;
+          option.textContent = key;
+          sansthaFilter.appendChild(option);
+        });
+      });
+      onValue(ref(db, 'students'), (snapshot) => {
+        allStudents = snapshot.val() || {};
+        populateStudentDropdown();
+      });
+    }
+
+    sansthaFilter.addEventListener('change', async () => {
+      const selectedSanstha = sansthaFilter.value;
+      if (selectedSanstha) {
+        const passPrompt = prompt(`"${selectedSanstha}" ka Access Password darj karein:`);
+        const sansthaSnap = await get(ref(db, `sansthas/${selectedSanstha}`));
+        if (sansthaSnap.exists()) {
+          const correctPass = sansthaSnap.val().password;
+          if (passPrompt === correctPass) {
+            alert("Password Verified! Access Granted.");
+            currentAuthorizedSanstha = selectedSanstha;
+            populateStudentDropdown();
+          } else {
+            alert("Galat Password! Access Denied.");
+            sansthaFilter.value = currentAuthorizedSanstha;
+            populateStudentDropdown();
+          }
+        } else {
+          alert("Sanstha data nahi mila!");
+          sansthaFilter.value = "";
+          currentAuthorizedSanstha = "";
+          populateStudentDropdown();
+        }
+      } else {
+        currentAuthorizedSanstha = "";
+        populateStudentDropdown();
+      }
+    });
+
+    function populateStudentDropdown() {
+      const selectedSanstha = sansthaFilter.value;
+      const studentSelect = document.getElementById('studentSelect');
+      studentSelect.innerHTML = '<option value="">-- Select Student --</option>';
+      Object.keys(allStudents).forEach(roll => {
+        const student = allStudents[roll];
+        if (!selectedSanstha || student.sanstha === selectedSanstha) {
+          const option = document.createElement('option');
+          option.value = roll;
+          option.textContent = `${student.name} (Roll: ${roll})`;
+          studentSelect.appendChild(option);
+        }
+      });
+      updateProfileCard();
+      renderCalendar();
+    }
+
+    function updateProfileCard() {
+      const selectedRoll = document.getElementById('studentSelect').value;
+      const card = document.getElementById('profileCard');
+      if (selectedRoll && allStudents[selectedRoll]) {
+        const student = allStudents[selectedRoll];
+        document.getElementById('profileName').innerText = student.name;
+        document.getElementById('profileDetails').innerText = `Roll: ${student.roll} | Course: ${student.course} | Sanstha: ${student.sanstha || 'N/A'}`;
+        const avatar = document.getElementById('profileImg');
+        avatar.src = student.photo || 'https://via.placeholder.com/60?text=User';
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    }
+
+    async function renderCalendar() {
+      const grid = document.getElementById('calendarDays');
+      grid.innerHTML = '';
+      const selectedRoll = document.getElementById('studentSelect').value;
+      const year = currentDate.getFullYear();
+      const month = currentDate.getMonth();
+      document.getElementById('monthDisplay').innerText = `${currentDate.toLocaleString('default', { month: 'long' })} ${year}`;
+      const firstDay = new Date(year, month, 1).getDay();
+      const totalDays = new Date(year, month + 1, 0).getDate();
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      let monthRecords = {};
+      if (selectedRoll) {
+        const snap = await get(ref(db, `student_attendance/${selectedRoll}`));
+        if (snap.exists()) monthRecords = snap.val();
+      }
+
+      for (let i = 0; i < firstDay; i++) {
+        const emptyCell = document.createElement('div');
+        grid.appendChild(emptyCell);
+      }
+
+      for (let day = 1; day <= totalDays; day++) {
+        const dayCell = document.createElement('div');
+        const cellDate = new Date(year, month, day);
+        cellDate.setHours(0, 0, 0, 0);
+        const isPast = cellDate < today;
+        dayCell.className = `day-cell ${isPast ? 'past-date' : ''}`;
+        const formattedDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        let statusHTML = '';
+        if (selectedRoll && monthRecords[formattedDate]) {
+          const st = monthRecords[formattedDate].status;
+          statusHTML = `<span class="status-tag status-${st[0]}">${st}</span>`;
+        }
+        dayCell.innerHTML = `<span class="day-number">${day}</span>${statusHTML}`;
+        dayCell.addEventListener('click', () => {
+          if (!selectedRoll) {
+            alert("Pehle kisi student ko select karein!");
+            return;
+          }
+          if (isPast) {
+            alert("Beeti hui tareekh (Past Date) par attendance mark nahi kar sakte!");
+            return;
+          }
+          toggleAttendance(selectedRoll, formattedDate, monthRecords[formattedDate]?.status);
+        });
+        grid.appendChild(dayCell);
+      }
+    }
+
+    function toggleAttendance(roll, dateStr, currentStatus) {
+      let newStatus = (currentStatus === 'Present') ? 'Absent' : 'Present';
+      const studentName = allStudents[roll].name;
+      const sanstha = allStudents[roll].sanstha || 'N/A';
+      set(ref(db, `student_attendance/${roll}/${dateStr}`), { status: newStatus, name: studentName, sanstha: sanstha });
+      set(ref(db, `attendance/${dateStr}/${roll}`), { status: newStatus, name: studentName, sanstha: sanstha })
+        .then(() => renderCalendar());
+    }
+
+    async function applyBulkAttendance(targetStatus) {
+      const selectedSanstha = sansthaFilter.value;
+      if (!selectedSanstha) {
+        alert("Kripya Sanstha select karein jinki bulk attendance lagani hai!");
         return;
       }
-
-      if (targetSanstha === "__ADD_NEW__") {
-        const sName = document.getElementById('newSansthaName').value.trim();
-        const sPass = document.getElementById('newSansthaPass').value.trim();
-        if (!sName || !sPass) {
-          alert("Nayi Sanstha ka naam aur Password dono likhna zaroori hai!");
-          return;
-        }
-        targetSanstha = sName;
-        await set(ref(db, `sansthas/${sName}`), { password: sPass });
+      const matchingRolls = Object.keys(allStudents).filter(roll => allStudents[roll].sanstha === selectedSanstha);
+      if (matchingRolls.length === 0) {
+        alert("Iss Sanstha mein koi student registered nahi hai!");
+        return;
       }
+      const now = new Date();
+      const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+      const confirmMsg = `Kya aap "${selectedSanstha}" ke sabhi ${matchingRolls.length} students ko AAJ (${todayStr}) "${targetStatus}" mark karna chahte hain?`;
+      if (!confirm(confirmMsg)) return;
 
-      const email = document.getElementById('email').value.trim().toLowerCase();
-      const roll = document.getElementById('roll').value.trim();
-      const name = document.getElementById('name').value.trim();
-      const course = document.getElementById('course').value.trim();
-
-      // Firebase Database Saving with Gmail ID
-      set(ref(db, 'students/' + roll), {
-        email: email,
-        sanstha: targetSanstha,
-        roll: roll,
-        name: name,
-        course: course,
-        photo: imageBase64 || null,
-        registeredAt: new Date().toISOString()
-      }).then(() => {
-        alert("Student Successfully Registered!");
-        msg.style.color = '#00ff66';
-        msg.innerText = "Student Registered Successfully!";
-        document.getElementById('regForm').reset();
-        newSansthaBox.style.display = "none";
-        document.getElementById('previewImg').style.display = "none";
-        document.getElementById('placeholderText').style.display = "block";
-        imageBase64 = "";
-      }).catch((err) => {
-        alert("Error: " + err.message);
-        msg.style.color = '#ff0055';
-        msg.innerText = "Error: " + err.message;
+      const promises = [];
+      matchingRolls.forEach(roll => {
+        const studentName = allStudents[roll].name;
+        promises.push(set(ref(db, `student_attendance/${roll}/${todayStr}`), { status: targetStatus, name: studentName, sanstha: selectedSanstha }));
+        promises.push(set(ref(db, `attendance/${todayStr}/${roll}`), { status: targetStatus, name: studentName, sanstha: selectedSanstha }));
       });
-    });
+      try {
+        await Promise.all(promises);
+        alert(`Sabhi ${matchingRolls.length} students ki attendance "${targetStatus}" mark ho gayi hai!`);
+        renderCalendar();
+      } catch (err) {
+        alert("Bulk Attendance Error: " + err.message);
+      }
+    }
+
+    document.getElementById('bulkPresentBtn').addEventListener('click', () => applyBulkAttendance('Present'));
+    document.getElementById('bulkAbsentBtn').addEventListener('click', () => applyBulkAttendance('Absent'));
+    document.getElementById('studentSelect').addEventListener('change', () => { updateProfileCard(); renderCalendar(); });
+    document.getElementById('prevMonth').addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() - 1); renderCalendar(); });
+    document.getElementById('nextMonth').addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() + 1); renderCalendar(); });
   </script>
 </body>
 </html>
