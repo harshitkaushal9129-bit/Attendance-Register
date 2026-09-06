@@ -7,161 +7,58 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
     body { background: #05050a; color: #fff; min-height: 100vh; padding: 25px; display: flex; flex-direction: column; align-items: center; }
-    
-    .main-box {
-      background: #0d0f1d;
-      border: 2px solid #00f3ff;
-      border-radius: 16px;
-      padding: 25px;
-      width: 100%;
-      max-width: 800px;
-      box-shadow: 0 0 20px #00f3ff;
-    }
+    .main-box { background: #0d0f1d; border: 2px solid #00f3ff; border-radius: 16px; padding: 25px; width: 100%; max-width: 800px; box-shadow: 0 0 20px #00f3ff; }
     h2 { text-align: center; color: #00f3ff; text-shadow: 0 0 10px #00f3ff; margin-bottom: 20px; text-transform: uppercase; }
-    
-    .select-container {
-      display: flex;
-      gap: 15px;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
-    }
-    select {
-      padding: 12px;
-      background: #14172b;
-      border: 2px solid #ff007f;
-      color: #fff;
-      border-radius: 8px;
-      outline: none;
-      box-shadow: 0 0 10px #ff007f;
-      font-size: 15px;
-      min-width: 220px;
-    }
+    .select-container { display: flex; gap: 15px; justify-content: center; align-items: center; flex-wrap: wrap; margin-bottom: 15px; }
+    select { padding: 12px; background: #14172b; border: 2px solid #ff007f; color: #fff; border-radius: 8px; outline: none; box-shadow: 0 0 10px #ff007f; font-size: 15px; min-width: 220px; }
     select option { background: #0d0f1d; color: #fff; }
-
-    /* Student Profile View */
-    .profile-card {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      background: #14172b;
-      padding: 12px 20px;
-      border-radius: 10px;
-      border: 1px solid #00f3ff;
-      box-shadow: 0 0 10px #00f3ff;
-      margin-bottom: 15px;
-    }
-    .profile-avatar {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      border: 2px solid #00ff66;
-      object-fit: cover;
-      box-shadow: 0 0 8px #00ff66;
-      background: #05050a;
-    }
+    .bulk-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+    .bulk-btn { padding: 10px 16px; background: transparent; font-size: 13px; font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.3s; }
+    .btn-bulk-p { border: 2px solid #00ff66; color: #00ff66; box-shadow: 0 0 8px #00ff66; text-shadow: 0 0 4px #00ff66; }
+    .btn-bulk-p:hover { background: #00ff66; color: #000; }
+    .btn-bulk-a { border: 2px solid #ff0055; color: #ff0055; box-shadow: 0 0 8px #ff0055; text-shadow: 0 0 4px #ff0055; }
+    .btn-bulk-a:hover { background: #ff0055; color: #fff; }
+    .profile-card { display: flex; align-items: center; gap: 15px; background: #14172b; padding: 12px 20px; border-radius: 10px; border: 1px solid #00f3ff; box-shadow: 0 0 10px #00f3ff; margin-bottom: 15px; }
+    .profile-avatar { width: 60px; height: 60px; border-radius: 50%; border: 2px solid #00ff66; object-fit: cover; box-shadow: 0 0 8px #00ff66; background: #05050a; }
     .profile-info h4 { color: #00ff66; text-shadow: 0 0 5px #00ff66; margin-bottom: 3px; }
     .profile-info p { font-size: 13px; color: #aaa; }
-    
-    .calendar-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 15px 0;
-    }
-    .cal-btn {
-      background: transparent;
-      border: 1px solid #00ff66;
-      color: #00ff66;
-      padding: 6px 15px;
-      border-radius: 6px;
-      cursor: pointer;
-      box-shadow: 0 0 5px #00ff66;
-      font-weight: bold;
-    }
+    .calendar-header { display: flex; justify-content: space-between; align-items: center; margin: 15px 0; }
+    .cal-btn { background: transparent; border: 1px solid #00ff66; color: #00ff66; padding: 6px 15px; border-radius: 6px; cursor: pointer; box-shadow: 0 0 5px #00ff66; font-weight: bold; }
     .month-title { font-size: 18px; color: #00ff66; text-shadow: 0 0 5px #00ff66; font-weight: bold; }
-    
-    .calendar-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 8px;
-      margin-top: 10px;
-    }
-    .day-name {
-      text-align: center;
-      color: #ff007f;
-      font-weight: bold;
-      padding: 5px;
-      text-shadow: 0 0 5px #ff007f;
-    }
-    .day-cell {
-      background: #14172b;
-      border: 1px solid #1f2440;
-      border-radius: 8px;
-      min-height: 60px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      padding: 5px;
-      cursor: pointer;
-      transition: 0.2s;
-    }
+    .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-top: 10px; }
+    .day-name { text-align: center; color: #ff007f; font-weight: bold; padding: 5px; text-shadow: 0 0 5px #ff007f; }
+    .day-cell { background: #14172b; border: 1px solid #1f2440; border-radius: 8px; min-height: 60px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 5px; cursor: pointer; transition: 0.2s; }
     .day-cell:hover { border-color: #00f3ff; box-shadow: 0 0 8px #00f3ff; }
-    
-    .day-cell.past-date {
-      opacity: 0.4;
-      cursor: not-allowed;
-      border-color: #333;
-    }
-    .day-cell.past-date:hover {
-      border-color: #ff0055;
-      box-shadow: 0 0 5px #ff0055;
-    }
-
+    .day-cell.past-date { opacity: 0.4; cursor: not-allowed; border-color: #333; }
+    .day-cell.past-date:hover { border-color: #ff0055; box-shadow: 0 0 5px #ff0055; }
     .day-number { font-size: 14px; font-weight: bold; color: #aaa; align-self: flex-start; }
     .status-tag { font-size: 11px; padding: 2px 5px; border-radius: 4px; font-weight: bold; }
     .status-P { background: rgba(0, 255, 102, 0.2); color: #00ff66; border: 1px solid #00ff66; box-shadow: 0 0 5px #00ff66; }
     .status-A { background: rgba(255, 0, 85, 0.2); color: #ff0055; border: 1px solid #ff0055; box-shadow: 0 0 5px #ff0055; }
-    
     .nav-links { margin-top: 25px; display: flex; gap: 15px; justify-content: center; }
-    .btn-link {
-      padding: 10px 20px;
-      background: transparent;
-      border: 2px solid #ff007f;
-      color: #ff007f;
-      font-weight: bold;
-      border-radius: 8px;
-      cursor: pointer;
-      box-shadow: 0 0 10px #ff007f;
-      text-decoration: none;
-    }
+    .btn-link { padding: 10px 20px; background: transparent; border: 2px solid #ff007f; color: #ff007f; font-weight: bold; border-radius: 8px; cursor: pointer; box-shadow: 0 0 10px #ff007f; text-decoration: none; }
     .btn-link:hover { background: #ff007f; color: #fff; }
   </style>
 </head>
 <body>
-
   <div class="main-box">
     <h2>Calendar Attendance Register</h2>
-    
     <div class="select-container">
       <div>
         <select id="sansthaFilter">
           <option value="">-- All Sanstha --</option>
-          <option value="Kaushal Technical Institute">Kaushal Technical Institute</option>
-          <option value="Computer Skill Academy">Computer Skill Academy</option>
-          <option value="Digital Youth Foundation">Digital Youth Foundation</option>
         </select>
       </div>
-
       <div>
         <select id="studentSelect">
           <option value="">-- Select Student --</option>
         </select>
       </div>
     </div>
-
+    <div class="bulk-actions">
+      <button class="bulk-btn btn-bulk-p" id="bulkPresentBtn">Mark All Selected Sanstha Present (Today)</button>
+      <button class="bulk-btn btn-bulk-a" id="bulkAbsentBtn">Mark All Selected Sanstha Absent (Today)</button>
+    </div>
     <div class="profile-card" id="profileCard" style="display: none;">
       <img id="profileImg" class="profile-avatar" src="" alt="Student Photo">
       <div class="profile-info">
@@ -169,20 +66,16 @@
         <p id="profileDetails">Roll: 101 | Course: O Level | Sanstha: ABC</p>
       </div>
     </div>
-
     <div class="calendar-header">
       <button class="cal-btn" id="prevMonth">&lt; Prev</button>
       <div class="month-title" id="monthDisplay">Month Year</div>
       <button class="cal-btn" id="nextMonth">Next &gt;</button>
     </div>
-
     <div class="calendar-grid">
       <div class="day-name">Sun</div><div class="day-name">Mon</div><div class="day-name">Tue</div>
       <div class="day-name">Wed</div><div class="day-name">Thu</div><div class="day-name">Fri</div><div class="day-name">Sat</div>
     </div>
-
     <div class="calendar-grid" id="calendarDays"></div>
-
     <div class="nav-links">
       <a href="index.html" class="btn-link">+ Register Student</a>
       <a href="records.html" class="btn-link" style="border-color:#00ff66; color:#00ff66; box-shadow:0 0 10px #00ff66;">View Stored Records</a>
@@ -207,20 +100,61 @@
 
     let currentDate = new Date();
     let allStudents = {};
+    let sansthaMap = {};
+    let currentAuthorizedSanstha = "";
 
-    // Load All Students
+    const sansthaFilter = document.getElementById('sansthaFilter');
+
+    onValue(ref(db, 'sansthas'), (snap) => {
+      sansthaMap = snap.val() || {};
+      sansthaFilter.innerHTML = '<option value="">-- All Sanstha --</option>';
+      Object.keys(sansthaMap).forEach(key => {
+        const option = document.createElement('option');
+        option.value = key;
+        option.textContent = key;
+        sansthaFilter.appendChild(option);
+      });
+    });
+
     onValue(ref(db, 'students'), (snapshot) => {
       allStudents = snapshot.val() || {};
       populateStudentDropdown();
     });
 
-    // Populate Dropdown by Sanstha Filter
-    function populateStudentDropdown() {
-      const selectedSanstha = document.getElementById('sansthaFilter').value;
-      const studentSelect = document.getElementById('studentSelect');
-      
-      studentSelect.innerHTML = '<option value="">-- Select Student --</option>';
+    sansthaFilter.addEventListener('change', async () => {
+      const selectedSanstha = sansthaFilter.value;
 
+      if (selectedSanstha) {
+        const passPrompt = prompt(`"${selectedSanstha}" ka Access Password darj karein:`);
+        const sansthaSnap = await get(ref(db, `sansthas/${selectedSanstha}`));
+        
+        if (sansthaSnap.exists()) {
+          const correctPass = sansthaSnap.val().password;
+          if (passPrompt === correctPass) {
+            alert("Password Verified! Access Granted.");
+            currentAuthorizedSanstha = selectedSanstha;
+            populateStudentDropdown();
+          } else {
+            alert("Galat Password! Access Denied.");
+            sansthaFilter.value = currentAuthorizedSanstha;
+            populateStudentDropdown();
+          }
+        } else {
+          alert("Sanstha data nahi mila!");
+          sansthaFilter.value = "";
+          currentAuthorizedSanstha = "";
+          populateStudentDropdown();
+        }
+      } else {
+        currentAuthorizedSanstha = "";
+        populateStudentDropdown();
+      }
+    });
+
+    function populateStudentDropdown() {
+      const selectedSanstha = sansthaFilter.value;
+      const studentSelect = document.getElementById('studentSelect');
+      studentSelect.innerHTML = '<option value="">-- Select Student --</option>';
       Object.keys(allStudents).forEach(roll => {
         const student = allStudents[roll];
         if (!selectedSanstha || student.sanstha === selectedSanstha) {
@@ -230,24 +164,19 @@
           studentSelect.appendChild(option);
         }
       });
-
       updateProfileCard();
       renderCalendar();
     }
 
-    // Update Profile Card
     function updateProfileCard() {
       const selectedRoll = document.getElementById('studentSelect').value;
       const card = document.getElementById('profileCard');
-
       if (selectedRoll && allStudents[selectedRoll]) {
         const student = allStudents[selectedRoll];
         document.getElementById('profileName').innerText = student.name;
         document.getElementById('profileDetails').innerText = `Roll: ${student.roll} | Course: ${student.course} | Sanstha: ${student.sanstha || 'N/A'}`;
-        
         const avatar = document.getElementById('profileImg');
         avatar.src = student.photo || 'https://via.placeholder.com/60?text=User';
-        
         card.style.display = 'flex';
       } else {
         card.style.display = 'none';
@@ -257,16 +186,13 @@
     async function renderCalendar() {
       const grid = document.getElementById('calendarDays');
       grid.innerHTML = '';
-
       const selectedRoll = document.getElementById('studentSelect').value;
       const year = currentDate.getFullYear();
       const month = currentDate.getMonth();
-
       document.getElementById('monthDisplay').innerText = `${currentDate.toLocaleString('default', { month: 'long' })} ${year}`;
 
       const firstDay = new Date(year, month, 1).getDay();
       const totalDays = new Date(year, month + 1, 0).getDate();
-
       const today = new Date();
       today.setHours(0, 0, 0, 0);
 
@@ -283,14 +209,11 @@
 
       for (let day = 1; day <= totalDays; day++) {
         const dayCell = document.createElement('div');
-        
         const cellDate = new Date(year, month, day);
         cellDate.setHours(0, 0, 0, 0);
 
         const isPast = cellDate < today;
-
         dayCell.className = `day-cell ${isPast ? 'past-date' : ''}`;
-        
         const formattedDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
         
         let statusHTML = '';
@@ -299,22 +222,17 @@
           statusHTML = `<span class="status-tag status-${st[0]}">${st}</span>`;
         }
 
-        dayCell.innerHTML = `
-          <span class="day-number">${day}</span>
-          ${statusHTML}
-        `;
+        dayCell.innerHTML = `<span class="day-number">${day}</span>${statusHTML}`;
 
         dayCell.addEventListener('click', () => {
           if (!selectedRoll) {
             alert("Pehle kisi student ko select karein!");
             return;
           }
-
           if (isPast) {
             alert("Beeti hui tareekh (Past Date) par attendance mark nahi kar sakte!");
             return;
           }
-
           toggleAttendance(selectedRoll, formattedDate, monthRecords[formattedDate]?.status);
         });
 
@@ -323,10 +241,7 @@
     }
 
     function toggleAttendance(roll, dateStr, currentStatus) {
-      let newStatus = 'Present';
-      if (currentStatus === 'Present') newStatus = 'Absent';
-      else if (currentStatus === 'Absent') newStatus = 'Present';
-
+      let newStatus = (currentStatus === 'Present') ? 'Absent' : 'Present';
       const studentName = allStudents[roll].name;
       const sanstha = allStudents[roll].sanstha || 'N/A';
 
@@ -335,7 +250,44 @@
         .then(() => renderCalendar());
     }
 
-    document.getElementById('sansthaFilter').addEventListener('change', populateStudentDropdown);
+    async function applyBulkAttendance(targetStatus) {
+      const selectedSanstha = sansthaFilter.value;
+      if (!selectedSanstha) {
+        alert("Kripya Sanstha select karein jinki bulk attendance lagani hai!");
+        return;
+      }
+
+      const matchingRolls = Object.keys(allStudents).filter(roll => allStudents[roll].sanstha === selectedSanstha);
+      if (matchingRolls.length === 0) {
+        alert("Iss Sanstha mein koi student registered nahi hai!");
+        return;
+      }
+
+      const now = new Date();
+      const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+
+      const confirmMsg = `Kya aap "${selectedSanstha}" ke sabhi ${matchingRolls.length} students ko AAJ (${todayStr}) "${targetStatus}" mark karna chahte hain?`;
+      if (!confirm(confirmMsg)) return;
+
+      const promises = [];
+      matchingRolls.forEach(roll => {
+        const studentName = allStudents[roll].name;
+        promises.push(set(ref(db, `student_attendance/${roll}/${todayStr}`), { status: targetStatus, name: studentName, sanstha: selectedSanstha }));
+        promises.push(set(ref(db, `attendance/${todayStr}/${roll}`), { status: targetStatus, name: studentName, sanstha: selectedSanstha }));
+      });
+
+      try {
+        await Promise.all(promises);
+        alert(`Sabhi ${matchingRolls.length} students ki attendance "${targetStatus}" mark ho gayi hai!`);
+        renderCalendar();
+      } catch (err) {
+        alert("Bulk Attendance Error: " + err.message);
+      }
+    }
+
+    document.getElementById('bulkPresentBtn').addEventListener('click', () => applyBulkAttendance('Present'));
+    document.getElementById('bulkAbsentBtn').addEventListener('click', () => applyBulkAttendance('Absent'));
+
     document.getElementById('studentSelect').addEventListener('change', () => {
       updateProfileCard();
       renderCalendar();
