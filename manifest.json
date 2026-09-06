@@ -10,12 +10,14 @@
     {
       "src": "https://harshitkaushal9129-bit.github.io/full-forms-for-o-level/kaushalji.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "https://harshitkaushal9129-bit.github.io/full-forms-for-o-level/Kaushalji.png",
+      "src": "https://harshitkaushal9129-bit.github.io/full-forms-for-o-level/kaushalji.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
