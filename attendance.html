@@ -177,6 +177,17 @@
     const accessMessage = document.getElementById('accessMessage');
     const sansthaFilter = document.getElementById('sansthaFilter');
 
+    // Global Click Delegation for Dynamic Buttons
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('#googleLoginBtn')) {
+        signInWithPopup(auth, provider).catch(err => alert("Google Auth Error: " + err.message));
+      }
+
+      if (e.target.closest('#logoutBtn')) {
+        signOut(auth);
+      }
+    });
+
     // Google Sign-In and Database Verification Check
     onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -200,7 +211,6 @@
             <button class="btn-logout" id="logoutBtn">Logout</button>
           </div>
         `;
-        document.getElementById('logoutBtn').addEventListener('click', () => signOut(auth));
 
         if (isRegistered) {
           accessMessage.style.display = 'none';
@@ -218,9 +228,6 @@
             Sign in with Google
           </button>
         `;
-        document.getElementById('googleLoginBtn').addEventListener('click', () => {
-          signInWithPopup(auth, provider).catch(err => alert("Google Auth Error: " + err.message));
-        });
         attendanceContent.style.display = 'none';
         accessMessage.style.display = 'none';
       }
