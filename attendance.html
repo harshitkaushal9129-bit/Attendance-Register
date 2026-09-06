@@ -19,13 +19,13 @@
     }
     h2 { text-align: center; color: #00f3ff; text-shadow: 0 0 10px #00f3ff; margin-bottom: 20px; text-transform: uppercase; }
     
-    .select-box {
-      margin-bottom: 20px;
+    .select-container {
       display: flex;
       gap: 15px;
       justify-content: center;
       align-items: center;
       flex-wrap: wrap;
+      margin-bottom: 20px;
     }
     select {
       padding: 12px;
@@ -35,9 +35,34 @@
       border-radius: 8px;
       outline: none;
       box-shadow: 0 0 10px #ff007f;
-      font-size: 16px;
-      min-width: 250px;
+      font-size: 15px;
+      min-width: 220px;
     }
+    select option { background: #0d0f1d; color: #fff; }
+
+    /* Student Profile View */
+    .profile-card {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      background: #14172b;
+      padding: 12px 20px;
+      border-radius: 10px;
+      border: 1px solid #00f3ff;
+      box-shadow: 0 0 10px #00f3ff;
+      margin-bottom: 15px;
+    }
+    .profile-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 2px solid #00ff66;
+      object-fit: cover;
+      box-shadow: 0 0 8px #00ff66;
+      background: #05050a;
+    }
+    .profile-info h4 { color: #00ff66; text-shadow: 0 0 5px #00ff66; margin-bottom: 3px; }
+    .profile-info p { font-size: 13px; color: #aaa; }
     
     .calendar-header {
       display: flex;
@@ -85,7 +110,6 @@
     }
     .day-cell:hover { border-color: #00f3ff; box-shadow: 0 0 8px #00f3ff; }
     
-    /* Past Dates Disabled Styling */
     .day-cell.past-date {
       opacity: 0.4;
       cursor: not-allowed;
@@ -121,11 +145,29 @@
   <div class="main-box">
     <h2>Calendar Attendance Register</h2>
     
-    <div class="select-box">
-      <label style="color:#00f3ff; font-weight:bold;">Select Student:</label>
-      <select id="studentSelect">
-        <option value="">-- Choose Student --</option>
-      </select>
+    <div class="select-container">
+      <div>
+        <select id="sansthaFilter">
+          <option value="">-- All Sanstha --</option>
+          <option value="Kaushal Technical Institute">Kaushal Technical Institute</option>
+          <option value="Computer Skill Academy">Computer Skill Academy</option>
+          <option value="Digital Youth Foundation">Digital Youth Foundation</option>
+        </select>
+      </div>
+
+      <div>
+        <select id="studentSelect">
+          <option value="">-- Select Student --</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="profile-card" id="profileCard" style="display: none;">
+      <img id="profileImg" class="profile-avatar" src="" alt="Student Photo">
+      <div class="profile-info">
+        <h4 id="profileName">Student Name</h4>
+        <p id="profileDetails">Roll: 101 | Course: O Level | Sanstha: ABC</p>
+      </div>
     </div>
 
     <div class="calendar-header">
@@ -164,21 +206,53 @@
     const db = getDatabase(app);
 
     let currentDate = new Date();
-    let studentsData = {};
+    let allStudents = {};
 
-    // Load Students Dropdown
+    // Load All Students
     onValue(ref(db, 'students'), (snapshot) => {
-      const select = document.getElementById('studentSelect');
-      select.innerHTML = '<option value="">-- Choose Student --</option>';
-      studentsData = snapshot.val() || {};
-      
-      Object.keys(studentsData).forEach(roll => {
-        const option = document.createElement('option');
-        option.value = roll;
-        option.textContent = `${studentsData[roll].name} (Roll: ${roll})`;
-        select.appendChild(option);
-      });
+      allStudents = snapshot.val() || {};
+      populateStudentDropdown();
     });
+
+    // Populate Dropdown by Sanstha Filter
+    function populateStudentDropdown() {
+      const selectedSanstha = document.getElementById('sansthaFilter').value;
+      const studentSelect = document.getElementById('studentSelect');
+      
+      studentSelect.innerHTML = '<option value="">-- Select Student --</option>';
+
+      Object.keys(allStudents).forEach(roll => {
+        const student = allStudents[roll];
+        if (!selectedSanstha || student.sanstha === selectedSanstha) {
+          const option = document.createElement('option');
+          option.value = roll;
+          option.textContent = `${student.name} (Roll: ${roll})`;
+          studentSelect.appendChild(option);
+        }
+      });
+
+      updateProfileCard();
+      renderCalendar();
+    }
+
+    // Update Profile Card
+    function updateProfileCard() {
+      const selectedRoll = document.getElementById('studentSelect').value;
+      const card = document.getElementById('profileCard');
+
+      if (selectedRoll && allStudents[selectedRoll]) {
+        const student = allStudents[selectedRoll];
+        document.getElementById('profileName').innerText = student.name;
+        document.getElementById('profileDetails').innerText = `Roll: ${student.roll} | Course: ${student.course} | Sanstha: ${student.sanstha || 'N/A'}`;
+        
+        const avatar = document.getElementById('profileImg');
+        avatar.src = student.photo || 'https://via.placeholder.com/60?text=User';
+        
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    }
 
     async function renderCalendar() {
       const grid = document.getElementById('calendarDays');
@@ -193,24 +267,20 @@
       const firstDay = new Date(year, month, 1).getDay();
       const totalDays = new Date(year, month + 1, 0).getDate();
 
-      // Today's date without time for exact comparison
       const today = new Date();
       today.setHours(0, 0, 0, 0);
 
-      // Get attendance data for selected student
       let monthRecords = {};
       if (selectedRoll) {
         const snap = await get(ref(db, `student_attendance/${selectedRoll}`));
         if (snap.exists()) monthRecords = snap.val();
       }
 
-      // Blank slots before 1st date
       for (let i = 0; i < firstDay; i++) {
         const emptyCell = document.createElement('div');
         grid.appendChild(emptyCell);
       }
 
-      // Render days
       for (let day = 1; day <= totalDays; day++) {
         const dayCell = document.createElement('div');
         
@@ -257,14 +327,20 @@
       if (currentStatus === 'Present') newStatus = 'Absent';
       else if (currentStatus === 'Absent') newStatus = 'Present';
 
-      const studentName = studentsData[roll].name;
+      const studentName = allStudents[roll].name;
+      const sanstha = allStudents[roll].sanstha || 'N/A';
 
-      set(ref(db, `student_attendance/${roll}/${dateStr}`), { status: newStatus, name: studentName });
-      set(ref(db, `attendance/${dateStr}/${roll}`), { status: newStatus, name: studentName })
+      set(ref(db, `student_attendance/${roll}/${dateStr}`), { status: newStatus, name: studentName, sanstha: sanstha });
+      set(ref(db, `attendance/${dateStr}/${roll}`), { status: newStatus, name: studentName, sanstha: sanstha })
         .then(() => renderCalendar());
     }
 
-    document.getElementById('studentSelect').addEventListener('change', renderCalendar);
+    document.getElementById('sansthaFilter').addEventListener('change', populateStudentDropdown);
+    document.getElementById('studentSelect').addEventListener('change', () => {
+      updateProfileCard();
+      renderCalendar();
+    });
+
     document.getElementById('prevMonth').addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() - 1); renderCalendar(); });
     document.getElementById('nextMonth').addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() + 1); renderCalendar(); });
 
