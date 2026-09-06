@@ -1,5 +1,5 @@
 {
-  "name": "Attendance Register Ultra",
+  "name": "Attendance Register by kaushalji",
   "short_name": "Attendance",
   "start_url": "./index.html",
   "display": "standalone",
@@ -8,12 +8,12 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "https://via.placeholder.com/192/00f3ff/000000?text=App",
+      "src": "https://harshitkaushal9129-bit.github.io/full-forms-for-o-level/kaushalji.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "https://via.placeholder.com/512/00f3ff/000000?text=App",
+      "src": "https://harshitkaushal9129-bit.github.io/full-forms-for-o-level/Kaushalji.png",
       "sizes": "512x512",
       "type": "image/png"
     }
