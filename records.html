@@ -33,7 +33,7 @@
     <div class="filter-container">
       <div>
         <select id="sansthaFilter">
-          <option value="">-- All Sanstha --</option>
+          <option value="">-- Select Sanstha --</option>
         </select>
       </div>
       <div>
@@ -54,7 +54,7 @@
         </tr>
       </thead>
       <tbody id="recordsTable">
-        <tr><td colspan="5" class="no-data">Select date to view records</td></tr>
+        <tr><td colspan="5" class="no-data">🔒 Please select Sanstha & enter password to unlock records</td></tr>
       </tbody>
     </table>
     <div class="nav-links">
@@ -89,9 +89,10 @@
     let sansthaMap = {};
     let currentAuthorizedSanstha = "";
 
+    // Dynamic Sanstha Dropdown Loading
     onValue(ref(db, 'sansthas'), (snap) => {
       sansthaMap = snap.val() || {};
-      sansthaFilter.innerHTML = '<option value="">-- All Sanstha --</option>';
+      sansthaFilter.innerHTML = '<option value="">-- Select Sanstha --</option>';
       Object.keys(sansthaMap).forEach(key => {
         const option = document.createElement('option');
         option.value = key;
@@ -100,18 +101,20 @@
       });
     });
 
+    // Handle Sanstha Password Verification
     sansthaFilter.addEventListener('change', async () => {
       const selectedSanstha = sansthaFilter.value;
       if (selectedSanstha) {
-        const passPrompt = prompt(`"${selectedSanstha}" ka Access Password darj karein:`);
+        const passPrompt = prompt(`"${selectedSanstha}" ka Password darj karein:`);
         const sansthaSnap = await get(ref(db, `sansthas/${selectedSanstha}`));
         if (sansthaSnap.exists() && passPrompt === sansthaSnap.val().password) {
-          alert("Password Verified! Access Granted.");
+          alert("✅ Access Granted! Data Unlocked.");
           currentAuthorizedSanstha = selectedSanstha;
           loadRecords();
         } else {
-          alert("Galat Password! Access Denied.");
-          sansthaFilter.value = currentAuthorizedSanstha;
+          alert("❌ Galat Password! Access Denied.");
+          sansthaFilter.value = "";
+          currentAuthorizedSanstha = "";
           loadRecords();
         }
       } else {
@@ -122,9 +125,14 @@
 
     async function loadRecords() {
       const selectedDate = datePicker.value;
-      const selectedSanstha = sansthaFilter.value;
       const queryText = searchInput.value.toLowerCase().trim();
       const tableBody = document.getElementById('recordsTable');
+
+      // Agar koi Sanstha authorized nahi hai to koi bhi data mat dikhao
+      if (!currentAuthorizedSanstha) {
+        tableBody.innerHTML = '<tr><td colspan="5" class="no-data">🔒 Please select Sanstha & enter password to unlock records</td></tr>';
+        return;
+      }
 
       if (!selectedDate) {
         tableBody.innerHTML = '<tr><td colspan="5" class="no-data">Please pick a date</td></tr>';
@@ -142,37 +150,38 @@
 
       Object.keys(studentsData).forEach(roll => {
         const student = studentsData[roll];
-        const matchesSanstha = !selectedSanstha || student.sanstha === selectedSanstha;
-        const matchesQuery = !queryText || roll.toLowerCase().includes(queryText) || student.name.toLowerCase().includes(queryText);
+        
+        // STRICT FILTER: Sirf Wahi Data Dikhao Jis Sanstha Ka Password Verified Hua Hai
+        if (student.sanstha === currentAuthorizedSanstha) {
+          const matchesQuery = !queryText || roll.toLowerCase().includes(queryText) || student.name.toLowerCase().includes(queryText);
 
-        if (matchesSanstha && matchesQuery) {
-          const record = attendanceData[roll];
-          const status = record ? record.status : 'NotMarked';
-          const displayStatus = record ? record.status : 'Not Marked';
-          const photo = student.photo || 'https://via.placeholder.com/40?text=User';
+          if (matchesQuery) {
+            const record = attendanceData[roll];
+            const status = record ? record.status : 'NotMarked';
+            const displayStatus = record ? record.status : 'Not Marked';
+            const photo = student.photo || 'https://via.placeholder.com/40?text=User';
 
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td><img src="${photo}" class="student-img" alt="Photo"></td>
-            <td>${roll}</td>
-            <td style="font-weight: bold; color: #fff;">${student.name}</td>
-            <td style="color: #aaa; font-size: 13px;">${student.sanstha || 'N/A'}</td>
-            <td><span class="status-tag status-${status}">${displayStatus}</span></td>
-          `;
-          tableBody.appendChild(tr);
-          count++;
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td><img src="${photo}" class="student-img" alt="Photo"></td>
+              <td>${roll}</td>
+              <td style="font-weight: bold; color: #fff;">${student.name}</td>
+              <td style="color: #aaa; font-size: 13px;">${student.sanstha || 'N/A'}</td>
+              <td><span class="status-tag status-${status}">${displayStatus}</span></td>
+            `;
+            tableBody.appendChild(tr);
+            count++;
+          }
         }
       });
 
       if (count === 0) {
-        tableBody.innerHTML = '<tr><td colspan="5" class="no-data">No student records found for this selection</td></tr>';
+        tableBody.innerHTML = `<tr><td colspan="5" class="no-data">No records found for "${currentAuthorizedSanstha}" on selected date/search</td></tr>`;
       }
     }
 
     datePicker.addEventListener('change', loadRecords);
     searchInput.addEventListener('input', loadRecords);
-
-    loadRecords();
   </script>
 </body>
 </html>
