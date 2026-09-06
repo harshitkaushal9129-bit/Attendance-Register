@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Student Registration - Ultra Neon</title>
+  
+  <!-- Manifest File & Theme Color Link -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#05050a">
+
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
     body { background: #05050a; color: #fff; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
@@ -157,6 +162,15 @@
   </div>
 
   <script type="module">
+    // Register Service Worker for PWA / Offline support
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.log('Service Worker Registered Successfully:', reg.scope))
+          .catch(err => console.error('Service Worker Registration Failed:', err));
+      });
+    }
+
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
     import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
 
