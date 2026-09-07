@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calendar Attendance - Ultra Neon</title>
+  <title>Calendar Attendance - Ultra Neon Modernized</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
     body { background: #05050a; color: #fff; min-height: 100vh; padding: 25px; display: flex; flex-direction: column; align-items: center; }
-    .main-box { background: #0d0f1d; border: 2px solid #00f3ff; border-radius: 16px; padding: 25px; width: 100%; max-width: 800px; box-shadow: 0 0 20px #00f3ff; }
+    .main-box { background: #0d0f1d; border: 2px solid #00f3ff; border-radius: 16px; padding: 25px; width: 100%; max-width: 900px; box-shadow: 0 0 20px #00f3ff; position: relative; }
     h2 { text-align: center; color: #00f3ff; text-shadow: 0 0 10px #00f3ff; margin-bottom: 20px; text-transform: uppercase; }
+    
     .colorful-neon-box { position: relative; background: linear-gradient(135deg, #090a15 0%, #150a21 100%); border-radius: 16px; padding: 18px; margin-bottom: 22px; text-align: center; border: 2px solid transparent; animation: gamingNeonGlow 3s infinite linear alternate; display: flex; justify-content: center; align-items: center; overflow: hidden; }
     @keyframes gamingNeonGlow {
       0% { border-color: #00f3ff; box-shadow: 0 0 15px #00f3ff, inset 0 0 12px #00f3ff; }
@@ -17,46 +18,92 @@
       75% { border-color: #00ff66; box-shadow: 0 0 15px #00ff66, inset 0 0 12px #00ff66; }
       100% { border-color: #ffaa00; box-shadow: 0 0 15px #ffaa00, inset 0 0 12px #ffaa00; }
     }
+    
     .btn-google { background: #ffffff; color: #111; font-weight: 800; padding: 12px 26px; border-radius: 30px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 12px; font-size: 15px; letter-spacing: 0.5px; box-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 25px #00f3ff; transition: all 0.3s ease; text-transform: uppercase; }
     .btn-google:hover { transform: translateY(-2px) scale(1.05); box-shadow: 0 0 25px rgba(255, 255, 255, 1), 0 0 35px #ff007f; }
+    
     .user-profile { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; }
     .user-avatar { width: 46px; height: 46px; border-radius: 50%; border: 2px solid #00ff66; box-shadow: 0 0 10px #00ff66; object-fit: cover; }
     .user-info { text-align: left; flex-grow: 1; overflow: hidden; }
     .user-info strong { color: #00f3ff; font-size: 15px; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-shadow: 0 0 5px #00f3ff; }
     .user-info span { color: #ff007f; font-size: 12px; font-weight: 600; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-shadow: 0 0 5px #ff007f; }
+    
     .btn-logout { background: transparent; border: 2px solid #ff0055; color: #ff0055; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: bold; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; }
     .btn-logout:hover { background: #ff0055; color: #fff; box-shadow: 0 0 15px #ff0055; }
+    
     #attendanceContent { display: none; }
     .select-container { display: flex; gap: 15px; justify-content: center; align-items: center; flex-wrap: wrap; margin-bottom: 15px; }
     select { padding: 12px; background: #14172b; border: 2px solid #ff007f; color: #fff; border-radius: 8px; outline: none; box-shadow: 0 0 10px #ff007f; font-size: 15px; min-width: 220px; }
     select option { background: #0d0f1d; color: #fff; }
+    
     .bulk-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
     .bulk-btn { padding: 10px 16px; background: transparent; font-size: 13px; font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.3s; }
     .btn-bulk-p { border: 2px solid #00ff66; color: #00ff66; box-shadow: 0 0 8px #00ff66; text-shadow: 0 0 4px #00ff66; }
     .btn-bulk-p:hover { background: #00ff66; color: #000; }
     .btn-bulk-a { border: 2px solid #ff0055; color: #ff0055; box-shadow: 0 0 8px #ff0055; text-shadow: 0 0 4px #ff0055; }
     .btn-bulk-a:hover { background: #ff0055; color: #fff; }
+    
     .profile-card { display: flex; align-items: center; gap: 15px; background: #14172b; padding: 12px 20px; border-radius: 10px; border: 1px solid #00f3ff; box-shadow: 0 0 10px #00f3ff; margin-bottom: 15px; }
     .profile-avatar { width: 60px; height: 60px; border-radius: 50%; border: 2px solid #00ff66; object-fit: cover; box-shadow: 0 0 8px #00ff66; background: #05050a; }
     .profile-info h4 { color: #00ff66; text-shadow: 0 0 5px #00ff66; margin-bottom: 3px; }
     .profile-info p { font-size: 13px; color: #aaa; }
+    
     .calendar-header { display: flex; justify-content: space-between; align-items: center; margin: 15px 0; }
     .cal-btn { background: transparent; border: 1px solid #00ff66; color: #00ff66; padding: 6px 15px; border-radius: 6px; cursor: pointer; box-shadow: 0 0 5px #00ff66; font-weight: bold; }
     .month-title { font-size: 18px; color: #00ff66; text-shadow: 0 0 5px #00ff66; font-weight: bold; }
+    
     .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-top: 10px; }
     .day-name { text-align: center; color: #ff007f; font-weight: bold; padding: 5px; text-shadow: 0 0 5px #ff007f; }
-    .day-cell { background: #14172b; border: 1px solid #1f2440; border-radius: 8px; min-height: 60px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 5px; cursor: pointer; transition: 0.2s; }
+    .day-cell { background: #14172b; border: 1px solid #1f2440; border-radius: 8px; min-height: 70px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 6px; cursor: pointer; transition: 0.2s; position: relative; }
     .day-cell:hover { border-color: #00f3ff; box-shadow: 0 0 8px #00f3ff; }
-    .day-cell.past-date { opacity: 0.4; cursor: not-allowed; border-color: #333; }
-    .day-cell.past-date:hover { border-color: #ff0055; box-shadow: 0 0 5px #ff0055; }
+    .day-cell.past-date { opacity: 0.6; }
+    .day-cell.holiday-cell { border-color: #ffaa00; background: rgba(255, 170, 0, 0.08); }
+    
     .day-number { font-size: 14px; font-weight: bold; color: #aaa; align-self: flex-start; }
-    .status-tag { font-size: 11px; padding: 2px 5px; border-radius: 4px; font-weight: bold; }
-    .status-P { background: rgba(0, 255, 102, 0.2); color: #00ff66; border: 1px solid #00ff66; box-shadow: 0 0 5px #00ff66; }
-    .status-A { background: rgba(255, 0, 85, 0.2); color: #ff0055; border: 1px solid #ff0055; box-shadow: 0 0 5px #ff0055; }
+    .status-container { display: flex; flex-wrap: wrap; gap: 3px; justify-content: center; width: 100%; margin-top: 4px; }
+    .status-tag { font-size: 10px; padding: 2px 4px; border-radius: 4px; font-weight: bold; text-align: center; }
+    .status-P { background: rgba(0, 255, 102, 0.2); color: #00ff66; border: 1px solid #00ff66; box-shadow: 0 0 4px #00ff66; }
+    .status-A { background: rgba(255, 0, 85, 0.2); color: #ff0055; border: 1px solid #ff0055; box-shadow: 0 0 4px #ff0055; }
+    .status-L { background: rgba(255, 170, 0, 0.2); color: #ffaa00; border: 1px solid #ffaa00; box-shadow: 0 0 4px #ffaa00; }
+    .status-H { background: rgba(0, 243, 255, 0.2); color: #00f3ff; border: 1px solid #00f3ff; box-shadow: 0 0 5px #00f3ff; font-size: 9px; width: 100%; }
+
     .nav-links { margin-top: 25px; display: flex; gap: 15px; justify-content: center; }
     .btn-link { padding: 10px 20px; background: transparent; border: 2px solid #ff007f; color: #ff007f; font-weight: bold; border-radius: 8px; cursor: pointer; box-shadow: 0 0 10px #ff007f; text-decoration: none; }
     .btn-link:hover { background: #ff007f; color: #fff; }
     #accessMessage { text-align: center; color: #ff0055; font-weight: bold; margin-top: 15px; text-shadow: 0 0 8px #ff0055; display: none; }
+
+    /* Modal Styling for Date Specific Student Attendance List */
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); z-index: 1000; justify-content: center; align-items: center; }
+    .modal-card { background: #0d0f1d; border: 2px solid #00f3ff; border-radius: 16px; padding: 20px; width: 95%; max-width: 650px; max-height: 85vh; display: flex; flex-direction: column; box-shadow: 0 0 25px #00f3ff; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1f2440; padding-bottom: 12px; margin-bottom: 15px; }
+    .modal-header h3 { color: #00f3ff; text-shadow: 0 0 8px #00f3ff; font-size: 18px; }
+    .btn-close { background: transparent; border: none; color: #ff0055; font-size: 22px; font-weight: bold; cursor: pointer; }
+    
+    .holiday-bar { background: #14172b; border: 1px solid #ffaa00; border-radius: 8px; padding: 10px 15px; display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 15px; box-shadow: 0 0 8px rgba(255, 170, 0, 0.3); }
+    .holiday-bar input[type="text"] { background: #05050a; border: 1px solid #ffaa00; color: #fff; padding: 6px 10px; border-radius: 6px; font-size: 12px; outline: none; width: 60%; }
+    .btn-holiday { background: transparent; border: 1px solid #ffaa00; color: #ffaa00; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: bold; transition: 0.2s; }
+    .btn-holiday:hover, .btn-holiday.active { background: #ffaa00; color: #000; box-shadow: 0 0 10px #ffaa00; }
+
+    .student-scroll-list { overflow-y: auto; flex-grow: 1; padding-right: 5px; display: flex; flex-direction: column; gap: 10px; }
+    .student-scroll-list::-webkit-scrollbar { width: 6px; }
+    .student-scroll-list::-webkit-scrollbar-thumb { background: #00f3ff; border-radius: 10px; }
+    
+    .student-row { background: #14172b; border: 1px solid #1f2440; border-radius: 8px; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px; transition: 0.2s; }
+    .student-row:hover { border-color: #00f3ff; }
+    .row-info { display: flex; align-items: center; gap: 12px; }
+    .row-img { width: 40px; height: 40px; border-radius: 50%; border: 1px solid #00ff66; object-fit: cover; }
+    .row-details h5 { color: #fff; font-size: 14px; margin-bottom: 2px; }
+    .row-details span { color: #aaa; font-size: 11px; }
+
+    .btn-status-group { display: flex; gap: 6px; }
+    .st-btn { padding: 6px 10px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; background: transparent; transition: 0.2s; }
+    .st-btn-p { border: 1px solid #00ff66; color: #00ff66; }
+    .st-btn-p.active, .st-btn-p:hover { background: #00ff66; color: #000; box-shadow: 0 0 8px #00ff66; }
+    .st-btn-a { border: 1px solid #ff0055; color: #ff0055; }
+    .st-btn-a.active, .st-btn-a:hover { background: #ff0055; color: #fff; box-shadow: 0 0 8px #ff0055; }
+    .st-btn-l { border: 1px solid #ffaa00; color: #ffaa00; }
+    .st-btn-l.active, .st-btn-l:hover { background: #ffaa00; color: #000; box-shadow: 0 0 8px #ffaa00; }
   </style>
 </head>
 <body>
@@ -68,6 +115,7 @@
       </button>
     </div>
     <div id="accessMessage">Access Denied: Your Gmail ID is not registered in the database!</div>
+    
     <div id="attendanceContent">
       <h2>Calendar Attendance Register</h2>
       <div class="select-container">
@@ -78,7 +126,7 @@
         </div>
         <div>
           <select id="studentSelect">
-            <option value="">-- Select Student --</option>
+            <option value="">-- Select Student (Filter View) --</option>
           </select>
         </div>
       </div>
@@ -109,9 +157,27 @@
       </div>
     </div>
   </div>
+
+  <!-- Attendance Modal List Div -->
+  <div class="modal-overlay" id="attendanceModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modalDateTitle">Attendance for YYYY-MM-DD</h3>
+        <button class="btn-close" id="closeModalBtn">&times;</button>
+      </div>
+      <div class="holiday-bar">
+        <input type="text" id="holidayReason" placeholder="Holiday reason (e.g. Sunday / Festival)">
+        <button class="btn-holiday" id="toggleHolidayBtn">Mark as Holiday</button>
+      </div>
+      <div class="student-scroll-list" id="studentScrollList">
+        <!-- Student list dynamically inserted -->
+      </div>
+    </div>
+  </div>
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-    import { getDatabase, ref, onValue, set, get } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
+    import { getDatabase, ref, onValue, set, get, remove } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
     import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
     const firebaseConfig = {
@@ -134,11 +200,13 @@
     let allStudents = {};
     let sansthaMap = {};
     let currentAuthorizedSanstha = "";
+    let activeSelectedDate = "";
 
     const authBox = document.getElementById('authBox');
     const attendanceContent = document.getElementById('attendanceContent');
     const accessMessage = document.getElementById('accessMessage');
     const sansthaFilter = document.getElementById('sansthaFilter');
+    const attendanceModal = document.getElementById('attendanceModal');
 
     document.addEventListener('click', (e) => {
       if (e.target.closest('#googleLoginBtn')) {
@@ -235,7 +303,7 @@
     function populateStudentDropdown() {
       const selectedSanstha = sansthaFilter.value;
       const studentSelect = document.getElementById('studentSelect');
-      studentSelect.innerHTML = '<option value="">-- Select Student --</option>';
+      studentSelect.innerHTML = '<option value="">-- Select Student (Filter View) --</option>';
       Object.keys(allStudents).forEach(roll => {
         const student = allStudents[roll];
         if (!selectedSanstha || student.sanstha === selectedSanstha) {
@@ -268,19 +336,21 @@
       const grid = document.getElementById('calendarDays');
       grid.innerHTML = '';
       const selectedRoll = document.getElementById('studentSelect').value;
+      const selectedSanstha = sansthaFilter.value;
       const year = currentDate.getFullYear();
       const month = currentDate.getMonth();
       document.getElementById('monthDisplay').innerText = `${currentDate.toLocaleString('default', { month: 'long' })} ${year}`;
+      
       const firstDay = new Date(year, month, 1).getDay();
       const totalDays = new Date(year, month + 1, 0).getDate();
       const today = new Date();
       today.setHours(0, 0, 0, 0);
 
-      let monthRecords = {};
-      if (selectedRoll) {
-        const snap = await get(ref(db, `student_attendance/${selectedRoll}`));
-        if (snap.exists()) monthRecords = snap.val();
-      }
+      // Fetch attendance & holiday snapshots
+      const attendanceSnap = await get(ref(db, 'attendance'));
+      const holidaySnap = await get(ref(db, 'holidays'));
+      const allAttendance = attendanceSnap.val() || {};
+      const allHolidays = holidaySnap.val() || {};
 
       for (let i = 0; i < firstDay; i++) {
         const emptyCell = document.createElement('div');
@@ -292,37 +362,153 @@
         const cellDate = new Date(year, month, day);
         cellDate.setHours(0, 0, 0, 0);
         const isPast = cellDate < today;
-        dayCell.className = `day-cell ${isPast ? 'past-date' : ''}`;
         const formattedDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        
+        let isHoliday = !!allHolidays[formattedDate];
+        dayCell.className = `day-cell ${isPast ? 'past-date' : ''} ${isHoliday ? 'holiday-cell' : ''}`;
+
         let statusHTML = '';
-        if (selectedRoll && monthRecords[formattedDate]) {
-          const st = monthRecords[formattedDate].status;
+        if (isHoliday) {
+          statusHTML = `<span class="status-tag status-H">HOLIDAY</span>`;
+        } else if (selectedRoll && allAttendance[formattedDate] && allAttendance[formattedDate][selectedRoll]) {
+          const st = allAttendance[formattedDate][selectedRoll].status;
           statusHTML = `<span class="status-tag status-${st[0]}">${st}</span>`;
+        } else if (allAttendance[formattedDate]) {
+          // Summary view if no single student is selected
+          let pCount = 0, aCount = 0, lCount = 0;
+          Object.values(allAttendance[formattedDate]).forEach(rec => {
+            if (!selectedSanstha || rec.sanstha === selectedSanstha) {
+              if (rec.status === 'Present') pCount++;
+              if (rec.status === 'Absent') aCount++;
+              if (rec.status === 'Leave') lCount++;
+            }
+          });
+          if (pCount > 0) statusHTML += `<span class="status-tag status-P">P:${pCount}</span>`;
+          if (aCount > 0) statusHTML += `<span class="status-tag status-A">A:${aCount}</span>`;
+          if (lCount > 0) statusHTML += `<span class="status-tag status-L">L:${lCount}</span>`;
         }
-        dayCell.innerHTML = `<span class="day-number">${day}</span>${statusHTML}`;
+
+        dayCell.innerHTML = `<span class="day-number">${day}</span><div class="status-container">${statusHTML}</div>`;
+        
+        // Open Modal Div on click for this date
         dayCell.addEventListener('click', () => {
-          if (!selectedRoll) {
-            alert("Pehle kisi student ko select karein!");
-            return;
-          }
-          if (isPast) {
-            alert("Beeti hui tareekh (Past Date) par attendance mark nahi kar sakte!");
-            return;
-          }
-          toggleAttendance(selectedRoll, formattedDate, monthRecords[formattedDate]?.status);
+          openAttendanceModal(formattedDate, isPast);
         });
+
         grid.appendChild(dayCell);
       }
     }
 
-    function toggleAttendance(roll, dateStr, currentStatus) {
-      let newStatus = (currentStatus === 'Present') ? 'Absent' : 'Present';
+    // Modal List Div Handler
+    async function openAttendanceModal(dateStr, isPast) {
+      activeSelectedDate = dateStr;
+      document.getElementById('modalDateTitle').innerText = `Manage Attendance: ${dateStr}`;
+      const scrollList = document.getElementById('studentScrollList');
+      const toggleHolidayBtn = document.getElementById('toggleHolidayBtn');
+      const holidayReasonInput = document.getElementById('holidayReason');
+      scrollList.innerHTML = '<p style="text-align:center; color:#aaa;">Loading student list...</p>';
+
+      const selectedSanstha = sansthaFilter.value;
+      const holidaySnap = await get(ref(db, `holidays/${dateStr}`));
+      const attendanceSnap = await get(ref(db, `attendance/${dateStr}`));
+      const dateRecords = attendanceSnap.val() || {};
+
+      let isHoliday = holidaySnap.exists();
+      if (isHoliday) {
+        toggleHolidayBtn.classList.add('active');
+        toggleHolidayBtn.innerText = "Remove Holiday";
+        holidayReasonInput.value = holidaySnap.val().reason || "";
+      } else {
+        toggleHolidayBtn.classList.remove('active');
+        toggleHolidayBtn.innerText = "Mark as Holiday";
+        holidayReasonInput.value = "";
+      }
+
+      // Filter active students by Sanstha
+      const filteredRolls = Object.keys(allStudents).filter(roll => {
+        return !selectedSanstha || allStudents[roll].sanstha === selectedSanstha;
+      });
+
+      if (filteredRolls.length === 0) {
+        scrollList.innerHTML = '<p style="text-align:center; color:#ff0055;">Is Sanstha mein koi student registered nahi hai!</p>';
+      } else {
+        scrollList.innerHTML = '';
+        filteredRolls.forEach(roll => {
+          const student = allStudents[roll];
+          const currentStatus = dateRecords[roll]?.status || '';
+          
+          const row = document.createElement('div');
+          row.className = 'student-row';
+          row.innerHTML = `
+            <div class="row-info">
+              <img class="row-img" src="${student.photo || 'https://via.placeholder.com/40'}" alt="Avatar">
+              <div class="row-details">
+                <h5>${student.name}</h5>
+                <span>Roll: ${roll} | ${student.sanstha || 'N/A'}</span>
+              </div>
+            </div>
+            <div class="btn-status-group">
+              <button class="st-btn st-btn-p ${currentStatus === 'Present' ? 'active' : ''}" data-roll="${roll}" data-status="Present">P</button>
+              <button class="st-btn st-btn-a ${currentStatus === 'Absent' ? 'active' : ''}" data-roll="${roll}" data-status="Absent">A</button>
+              <button class="st-btn st-btn-l ${currentStatus === 'Leave' ? 'active' : ''}" data-roll="${roll}" data-status="Leave">L</button>
+            </div>
+          `;
+          scrollList.appendChild(row);
+        });
+
+        // Add event listeners for individual status buttons in scrollable div
+        scrollList.querySelectorAll('.st-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            if (isPast) {
+              alert("Beeti hui tareekh (Past Date) par edit nahi kar sakte!");
+              return;
+            }
+            if (isHoliday) {
+              alert("Pehle Holiday status remove karein tabhi attendance lag sakti hai!");
+              return;
+            }
+            const roll = e.target.getAttribute('data-roll');
+            const status = e.target.getAttribute('data-status');
+            updateSingleAttendance(roll, dateStr, status);
+          });
+        });
+      }
+
+      attendanceModal.style.display = 'flex';
+    }
+
+    async function updateSingleAttendance(roll, dateStr, status) {
       const studentName = allStudents[roll].name;
       const sanstha = allStudents[roll].sanstha || 'N/A';
-      set(ref(db, `student_attendance/${roll}/${dateStr}`), { status: newStatus, name: studentName, sanstha: sanstha });
-      set(ref(db, `attendance/${dateStr}/${roll}`), { status: newStatus, name: studentName, sanstha: sanstha })
-        .then(() => renderCalendar());
+      
+      await set(ref(db, `student_attendance/${roll}/${dateStr}`), { status, name: studentName, sanstha });
+      await set(ref(db, `attendance/${dateStr}/${roll}`), { status, name: studentName, sanstha });
+
+      openAttendanceModal(dateStr, false);
+      renderCalendar();
     }
+
+    // Toggle Holiday Button Handler
+    document.getElementById('toggleHolidayBtn').addEventListener('click', async () => {
+      if (!activeSelectedDate) return;
+      const holidayRef = ref(db, `holidays/${activeSelectedDate}`);
+      const snap = await get(holidayRef);
+
+      if (snap.exists()) {
+        await remove(holidayRef);
+        alert(`Holiday removed for ${activeSelectedDate}`);
+      } else {
+        const reason = document.getElementById('holidayReason').value || "Holiday";
+        await set(holidayRef, { reason, markedAt: new Date().toISOString() });
+        alert(`Marked ${activeSelectedDate} as Holiday!`);
+      }
+      openAttendanceModal(activeSelectedDate, false);
+      renderCalendar();
+    });
+
+    document.getElementById('closeModalBtn').addEventListener('click', () => {
+      attendanceModal.style.display = 'none';
+    });
 
     async function applyBulkAttendance(targetStatus) {
       const selectedSanstha = sansthaFilter.value;
@@ -363,3 +549,4 @@
   </script>
 </body>
 </html>
+
