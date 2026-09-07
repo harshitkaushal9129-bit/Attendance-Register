@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calendar Attendance - Ultra Neon Modernized</title>
+  <title>Calendar Attendance - Pro Dashboard Edition</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-    body { background: #05050a; color: #fff; min-height: 100vh; padding: 25px; display: flex; flex-direction: column; align-items: center; }
-    .main-box { background: #0d0f1d; border: 2px solid #00f3ff; border-radius: 16px; padding: 25px; width: 100%; max-width: 900px; box-shadow: 0 0 20px #00f3ff; position: relative; }
+    body { background: #05050a; color: #fff; min-height: 100vh; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+    .main-box { background: #0d0f1d; border: 2px solid #00f3ff; border-radius: 16px; padding: 25px; width: 100%; max-width: 950px; box-shadow: 0 0 20px #00f3ff; position: relative; }
     h2 { text-align: center; color: #00f3ff; text-shadow: 0 0 10px #00f3ff; margin-bottom: 20px; text-transform: uppercase; }
     
     .colorful-neon-box { position: relative; background: linear-gradient(135deg, #090a15 0%, #150a21 100%); border-radius: 16px; padding: 18px; margin-bottom: 22px; text-align: center; border: 2px solid transparent; animation: gamingNeonGlow 3s infinite linear alternate; display: flex; justify-content: center; align-items: center; overflow: hidden; }
@@ -32,16 +32,20 @@
     .btn-logout:hover { background: #ff0055; color: #fff; box-shadow: 0 0 15px #ff0055; }
     
     #attendanceContent { display: none; }
+    
+    /* NEW: Dashboard Quick Stats Counter Grid */
+    .dashboard-counters { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 20px; }
+    .counter-card { background: #14172b; border: 1px solid #1f2440; border-radius: 12px; padding: 12px; text-align: center; box-shadow: 0 0 10px rgba(0,0,0,0.5); }
+    .counter-card h5 { color: #aaa; font-size: 12px; text-transform: uppercase; margin-bottom: 5px; }
+    .counter-card .number { font-size: 22px; font-weight: bold; }
+    .card-total .number { color: #00f3ff; text-shadow: 0 0 8px #00f3ff; }
+    .card-present .number { color: #00ff66; text-shadow: 0 0 8px #00ff66; }
+    .card-absent .number { color: #ff0055; text-shadow: 0 0 8px #ff0055; }
+    .card-leave .number { color: #ffaa00; text-shadow: 0 0 8px #ffaa00; }
+
     .select-container { display: flex; gap: 15px; justify-content: center; align-items: center; flex-wrap: wrap; margin-bottom: 15px; }
     select { padding: 12px; background: #14172b; border: 2px solid #ff007f; color: #fff; border-radius: 8px; outline: none; box-shadow: 0 0 10px #ff007f; font-size: 15px; min-width: 220px; }
     select option { background: #0d0f1d; color: #fff; }
-    
-    .bulk-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
-    .bulk-btn { padding: 10px 16px; background: transparent; font-size: 13px; font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.3s; }
-    .btn-bulk-p { border: 2px solid #00ff66; color: #00ff66; box-shadow: 0 0 8px #00ff66; text-shadow: 0 0 4px #00ff66; }
-    .btn-bulk-p:hover { background: #00ff66; color: #000; }
-    .btn-bulk-a { border: 2px solid #ff0055; color: #ff0055; box-shadow: 0 0 8px #ff0055; text-shadow: 0 0 4px #ff0055; }
-    .btn-bulk-a:hover { background: #ff0055; color: #fff; }
     
     .profile-card { display: flex; align-items: center; gap: 15px; background: #14172b; padding: 12px 20px; border-radius: 10px; border: 1px solid #00f3ff; box-shadow: 0 0 10px #00f3ff; margin-bottom: 15px; }
     .profile-avatar { width: 60px; height: 60px; border-radius: 50%; border: 2px solid #00ff66; object-fit: cover; box-shadow: 0 0 8px #00ff66; background: #05050a; }
@@ -55,7 +59,7 @@
     .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-top: 10px; }
     .day-name { text-align: center; color: #ff007f; font-weight: bold; padding: 5px; text-shadow: 0 0 5px #ff007f; }
     .day-cell { background: #14172b; border: 1px solid #1f2440; border-radius: 8px; min-height: 70px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 6px; cursor: pointer; transition: 0.2s; position: relative; }
-    .day-cell:hover { border-color: #00f3ff; box-shadow: 0 0 8px #00f3ff; }
+    .day-cell:hover { border-color: #00f3ff; box-shadow: 0 0 8px #00f3ff; transform: translateY(-2px); }
     .day-cell.past-date { opacity: 0.6; }
     .day-cell.holiday-cell { border-color: #ffaa00; background: rgba(255, 170, 0, 0.08); }
     
@@ -67,12 +71,17 @@
     .status-L { background: rgba(255, 170, 0, 0.2); color: #ffaa00; border: 1px solid #ffaa00; box-shadow: 0 0 4px #ffaa00; }
     .status-H { background: rgba(0, 243, 255, 0.2); color: #00f3ff; border: 1px solid #00f3ff; box-shadow: 0 0 5px #00f3ff; font-size: 9px; width: 100%; }
 
-    .nav-links { margin-top: 25px; display: flex; gap: 15px; justify-content: center; }
+    /* Action Buttons Bar */
+    .action-bar { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
+    .btn-action { padding: 8px 16px; background: transparent; border: 1px solid #00f3ff; color: #00f3ff; font-weight: bold; border-radius: 6px; cursor: pointer; box-shadow: 0 0 8px #00f3ff; font-size: 13px; }
+    .btn-action:hover { background: #00f3ff; color: #000; }
+
+    .nav-links { margin-top: 20px; display: flex; gap: 15px; justify-content: center; }
     .btn-link { padding: 10px 20px; background: transparent; border: 2px solid #ff007f; color: #ff007f; font-weight: bold; border-radius: 8px; cursor: pointer; box-shadow: 0 0 10px #ff007f; text-decoration: none; }
     .btn-link:hover { background: #ff007f; color: #fff; }
     #accessMessage { text-align: center; color: #ff0055; font-weight: bold; margin-top: 15px; text-shadow: 0 0 8px #ff0055; display: none; }
 
-    /* Modal Styling for Date Specific Student Attendance List */
+    /* Modal Styling */
     .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); z-index: 1000; justify-content: center; align-items: center; }
     .modal-card { background: #0d0f1d; border: 2px solid #00f3ff; border-radius: 16px; padding: 20px; width: 95%; max-width: 650px; max-height: 85vh; display: flex; flex-direction: column; box-shadow: 0 0 25px #00f3ff; animation: fadeIn 0.3s ease; }
     @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
@@ -80,6 +89,9 @@
     .modal-header h3 { color: #00f3ff; text-shadow: 0 0 8px #00f3ff; font-size: 18px; }
     .btn-close { background: transparent; border: none; color: #ff0055; font-size: 22px; font-weight: bold; cursor: pointer; }
     
+    /* NEW: Modal Search Input */
+    .modal-search { width: 100%; margin-bottom: 12px; background: #05050a; border: 1px solid #00f3ff; color: #fff; padding: 8px 12px; border-radius: 6px; font-size: 13px; outline: none; }
+
     .holiday-bar { background: #14172b; border: 1px solid #ffaa00; border-radius: 8px; padding: 10px 15px; display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 15px; box-shadow: 0 0 8px rgba(255, 170, 0, 0.3); }
     .holiday-bar input[type="text"] { background: #05050a; border: 1px solid #ffaa00; color: #fff; padding: 6px 10px; border-radius: 6px; font-size: 12px; outline: none; width: 60%; }
     .btn-holiday { background: transparent; border: 1px solid #ffaa00; color: #ffaa00; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: bold; transition: 0.2s; }
@@ -104,6 +116,11 @@
     .st-btn-a.active, .st-btn-a:hover { background: #ff0055; color: #fff; box-shadow: 0 0 8px #ff0055; }
     .st-btn-l { border: 1px solid #ffaa00; color: #ffaa00; }
     .st-btn-l.active, .st-btn-l:hover { background: #ffaa00; color: #000; box-shadow: 0 0 8px #ffaa00; }
+
+    /* Monthly Report Table Modal */
+    .report-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px; }
+    .report-table th, .report-table td { border: 1px solid #1f2440; padding: 8px; text-align: center; }
+    .report-table th { background: #14172b; color: #00f3ff; }
   </style>
 </head>
 <body>
@@ -118,6 +135,27 @@
     
     <div id="attendanceContent">
       <h2>Calendar Attendance Register</h2>
+
+      <!-- Live Dashboard Counter Cards -->
+      <div class="dashboard-counters">
+        <div class="counter-card card-total">
+          <h5>Total Students</h5>
+          <div class="number" id="dashTotalStudents">0</div>
+        </div>
+        <div class="counter-card card-present">
+          <h5>Today Present</h5>
+          <div class="number" id="dashTodayPresent">0</div>
+        </div>
+        <div class="counter-card card-absent">
+          <h5>Today Absent</h5>
+          <div class="number" id="dashTodayAbsent">0</div>
+        </div>
+        <div class="counter-card card-leave">
+          <h5>Today Leave</h5>
+          <div class="number" id="dashTodayLeave">0</div>
+        </div>
+      </div>
+
       <div class="select-container">
         <div>
           <select id="sansthaFilter">
@@ -130,10 +168,7 @@
           </select>
         </div>
       </div>
-      <div class="bulk-actions">
-        <button class="bulk-btn btn-bulk-p" id="bulkPresentBtn">Mark All Selected Sanstha Present (Today)</button>
-        <button class="bulk-btn btn-bulk-a" id="bulkAbsentBtn">Mark All Selected Sanstha Absent (Today)</button>
-      </div>
+
       <div class="profile-card" id="profileCard" style="display: none;">
         <img id="profileImg" class="profile-avatar" src="" alt="Student Photo">
         <div class="profile-info">
@@ -141,16 +176,25 @@
           <p id="profileDetails">Roll: 101 | Course: O Level | Sanstha: ABC</p>
         </div>
       </div>
+
       <div class="calendar-header">
         <button class="cal-btn" id="prevMonth">&lt; Prev</button>
         <div class="month-title" id="monthDisplay">Month Year</div>
         <button class="cal-btn" id="nextMonth">Next &gt;</button>
       </div>
+
       <div class="calendar-grid">
         <div class="day-name">Sun</div><div class="day-name">Mon</div><div class="day-name">Tue</div>
         <div class="day-name">Wed</div><div class="day-name">Thu</div><div class="day-name">Fri</div><div class="day-name">Sat</div>
       </div>
       <div class="calendar-grid" id="calendarDays"></div>
+
+      <!-- Export & Report Tools -->
+      <div class="action-bar">
+        <button class="btn-action" id="btnExportCSV">📊 Export Excel (CSV)</button>
+        <button class="btn-action" id="btnViewReport">📋 View Monthly Summary</button>
+      </div>
+
       <div class="nav-links">
         <a href="index.html" class="btn-link">+ Register Student</a>
         <a href="records.html" class="btn-link" style="border-color:#00ff66; color:#00ff66; box-shadow:0 0 10px #00ff66;">View Stored Records</a>
@@ -165,12 +209,36 @@
         <h3 id="modalDateTitle">Attendance for YYYY-MM-DD</h3>
         <button class="btn-close" id="closeModalBtn">&times;</button>
       </div>
+      <input type="text" id="modalStudentSearch" class="modal-search" placeholder="🔍 Search student by name or roll number...">
       <div class="holiday-bar">
         <input type="text" id="holidayReason" placeholder="Holiday reason (e.g. Sunday / Festival)">
         <button class="btn-holiday" id="toggleHolidayBtn">Mark as Holiday</button>
       </div>
-      <div class="student-scroll-list" id="studentScrollList">
-        <!-- Student list dynamically inserted -->
+      <div class="student-scroll-list" id="studentScrollList"></div>
+    </div>
+  </div>
+
+  <!-- Monthly Summary Report Modal -->
+  <div class="modal-overlay" id="reportModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Monthly Attendance Summary</h3>
+        <button class="btn-close" id="closeReportModalBtn">&times;</button>
+      </div>
+      <div style="overflow-y: auto; flex-grow: 1;">
+        <table class="report-table">
+          <thead>
+            <tr>
+              <th>Roll</th>
+              <th>Name</th>
+              <th>Present</th>
+              <th>Absent</th>
+              <th>Leave</th>
+              <th>Attendance %</th>
+            </tr>
+          </thead>
+          <tbody id="reportTableBody"></tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -194,7 +262,7 @@
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
 
-    setPersistence(auth, browserLocalPersistence).catch(err => console.error("Persistence Error:", err));
+    setPersistence(auth, browserLocalPersistence).catch(err => console.error(err));
 
     let currentDate = new Date();
     let allStudents = {};
@@ -209,12 +277,8 @@
     const attendanceModal = document.getElementById('attendanceModal');
 
     document.addEventListener('click', (e) => {
-      if (e.target.closest('#googleLoginBtn')) {
-        signInWithPopup(auth, provider).catch(err => alert("Google Auth Error: " + err.message));
-      }
-      if (e.target.closest('#logoutBtn')) {
-        signOut(auth);
-      }
+      if (e.target.closest('#googleLoginBtn')) signInWithPopup(auth, provider);
+      if (e.target.closest('#logoutBtn')) signOut(auth);
     });
 
     onAuthStateChanged(auth, async (user) => {
@@ -222,9 +286,8 @@
         const userEmail = user.email.toLowerCase();
         const studentsSnap = await get(ref(db, 'students'));
         allStudents = studentsSnap.val() || {};
-        const isRegistered = Object.values(allStudents).some(
-          student => student.email && student.email.toLowerCase() === userEmail
-        );
+        const isRegistered = Object.values(allStudents).some(s => s.email && s.email.toLowerCase() === userEmail);
+        
         authBox.innerHTML = `
           <div class="user-profile">
             <img class="user-avatar" src="${user.photoURL || 'https://via.placeholder.com/40'}" alt="User">
@@ -244,14 +307,8 @@
           accessMessage.style.display = 'block';
         }
       } else {
-        authBox.innerHTML = `
-          <button class="btn-google" id="googleLoginBtn">
-            <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.74-.06-1.28-.19-1.84H9v3.34h4.96c-.1.83-.64 2.08-1.84 2.92l2.84 2.2c1.7-1.57 2.68-3.88 2.68-6.62z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.84-2.2c-.76.53-1.78.9-3.12.9-2.38 0-4.41-1.57-5.13-3.7l-2.9 2.25C2.45 15.82 5.48 18 9 18z"/><path fill="#FBBC05" d="M3.87 10.82c-.18-.53-.28-1.1-.28-1.82s.1-1.29.28-1.82L.97 4.93C.35 6.16 0 7.55 0 9s.35 2.84.97 4.07l2.9-2.25z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0 5.48 0 2.45 2.18.97 4.93l2.9 2.25c.72-2.13 2.75-3.6 5.13-3.6z"/></svg>
-            Sign in with Google
-          </button>
-        `;
+        authBox.innerHTML = `<button class="btn-google" id="googleLoginBtn">Sign in with Google</button>`;
         attendanceContent.style.display = 'none';
-        accessMessage.style.display = 'none';
       }
     });
 
@@ -261,8 +318,7 @@
         sansthaFilter.innerHTML = '<option value="">-- All Sanstha --</option>';
         Object.keys(sansthaMap).forEach(key => {
           const option = document.createElement('option');
-          option.value = key;
-          option.textContent = key;
+          option.value = key; option.textContent = key;
           sansthaFilter.appendChild(option);
         });
       });
@@ -277,27 +333,17 @@
       if (selectedSanstha) {
         const passPrompt = prompt(`"${selectedSanstha}" ka Access Password darj karein:`);
         const sansthaSnap = await get(ref(db, `sansthas/${selectedSanstha}`));
-        if (sansthaSnap.exists()) {
-          const correctPass = sansthaSnap.val().password;
-          if (passPrompt === correctPass) {
-            alert("Password Verified! Access Granted.");
-            currentAuthorizedSanstha = selectedSanstha;
-            populateStudentDropdown();
-          } else {
-            alert("Galat Password! Access Denied.");
-            sansthaFilter.value = currentAuthorizedSanstha;
-            populateStudentDropdown();
-          }
+        if (sansthaSnap.exists() && passPrompt === sansthaSnap.val().password) {
+          alert("Password Verified!");
+          currentAuthorizedSanstha = selectedSanstha;
         } else {
-          alert("Sanstha data nahi mila!");
-          sansthaFilter.value = "";
-          currentAuthorizedSanstha = "";
-          populateStudentDropdown();
+          alert("Galat Password!");
+          sansthaFilter.value = currentAuthorizedSanstha;
         }
       } else {
         currentAuthorizedSanstha = "";
-        populateStudentDropdown();
       }
+      populateStudentDropdown();
     });
 
     function populateStudentDropdown() {
@@ -308,13 +354,36 @@
         const student = allStudents[roll];
         if (!selectedSanstha || student.sanstha === selectedSanstha) {
           const option = document.createElement('option');
-          option.value = roll;
-          option.textContent = `${student.name} (Roll: ${roll})`;
+          option.value = roll; option.textContent = `${student.name} (Roll: ${roll})`;
           studentSelect.appendChild(option);
         }
       });
       updateProfileCard();
       renderCalendar();
+      updateDashboardCounters();
+    }
+
+    async function updateDashboardCounters() {
+      const selectedSanstha = sansthaFilter.value;
+      const rolls = Object.keys(allStudents).filter(r => !selectedSanstha || allStudents[r].sanstha === selectedSanstha);
+      document.getElementById('dashTotalStudents').innerText = rolls.length;
+
+      const now = new Date();
+      const todayStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+      const attendanceSnap = await get(ref(db, `attendance/${todayStr}`));
+      const todayData = attendanceSnap.val() || {};
+
+      let p = 0, a = 0, l = 0;
+      rolls.forEach(r => {
+        if (todayData[r]) {
+          if (todayData[r].status === 'Present') p++;
+          if (todayData[r].status === 'Absent') a++;
+          if (todayData[r].status === 'Leave') l++;
+        }
+      });
+      document.getElementById('dashTodayPresent').innerText = p;
+      document.getElementById('dashTodayAbsent').innerText = a;
+      document.getElementById('dashTodayLeave').innerText = l;
     }
 
     function updateProfileCard() {
@@ -324,8 +393,7 @@
         const student = allStudents[selectedRoll];
         document.getElementById('profileName').innerText = student.name;
         document.getElementById('profileDetails').innerText = `Roll: ${student.roll} | Course: ${student.course} | Sanstha: ${student.sanstha || 'N/A'}`;
-        const avatar = document.getElementById('profileImg');
-        avatar.src = student.photo || 'https://via.placeholder.com/60?text=User';
+        document.getElementById('profileImg').src = student.photo || 'https://via.placeholder.com/60';
         card.style.display = 'flex';
       } else {
         card.style.display = 'none';
@@ -343,24 +411,18 @@
       
       const firstDay = new Date(year, month, 1).getDay();
       const totalDays = new Date(year, month + 1, 0).getDate();
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
+      const today = new Date(); today.setHours(0, 0, 0, 0);
 
-      // Fetch attendance & holiday snapshots
       const attendanceSnap = await get(ref(db, 'attendance'));
       const holidaySnap = await get(ref(db, 'holidays'));
       const allAttendance = attendanceSnap.val() || {};
       const allHolidays = holidaySnap.val() || {};
 
-      for (let i = 0; i < firstDay; i++) {
-        const emptyCell = document.createElement('div');
-        grid.appendChild(emptyCell);
-      }
+      for (let i = 0; i < firstDay; i++) grid.appendChild(document.createElement('div'));
 
       for (let day = 1; day <= totalDays; day++) {
         const dayCell = document.createElement('div');
-        const cellDate = new Date(year, month, day);
-        cellDate.setHours(0, 0, 0, 0);
+        const cellDate = new Date(year, month, day); cellDate.setHours(0, 0, 0, 0);
         const isPast = cellDate < today;
         const formattedDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
         
@@ -373,11 +435,10 @@
         } else if (selectedRoll && allAttendance[formattedDate] && allAttendance[formattedDate][selectedRoll]) {
           const st = allAttendance[formattedDate][selectedRoll].status;
           statusHTML = `<span class="status-tag status-${st[0]}">${st}</span>`;
-        } else if (allAttendance[formattedDate]) {
-          // Summary view if no single student is selected
+        } else if (selectedSanstha && allAttendance[formattedDate]) {
           let pCount = 0, aCount = 0, lCount = 0;
           Object.values(allAttendance[formattedDate]).forEach(rec => {
-            if (!selectedSanstha || rec.sanstha === selectedSanstha) {
+            if (rec.sanstha === selectedSanstha) {
               if (rec.status === 'Present') pCount++;
               if (rec.status === 'Absent') aCount++;
               if (rec.status === 'Leave') lCount++;
@@ -389,31 +450,29 @@
         }
 
         dayCell.innerHTML = `<span class="day-number">${day}</span><div class="status-container">${statusHTML}</div>`;
-        
-        // Open Modal Div on click for this date
-        dayCell.addEventListener('click', () => {
-          openAttendanceModal(formattedDate, isPast);
-        });
-
+        dayCell.addEventListener('click', () => openAttendanceModal(formattedDate, isPast));
         grid.appendChild(dayCell);
       }
     }
 
-    // Modal List Div Handler
     async function openAttendanceModal(dateStr, isPast) {
       activeSelectedDate = dateStr;
       document.getElementById('modalDateTitle').innerText = `Manage Attendance: ${dateStr}`;
       const scrollList = document.getElementById('studentScrollList');
-      const toggleHolidayBtn = document.getElementById('toggleHolidayBtn');
-      const holidayReasonInput = document.getElementById('holidayReason');
+      const searchInput = document.getElementById('modalStudentSearch');
+      searchInput.value = "";
+      
       scrollList.innerHTML = '<p style="text-align:center; color:#aaa;">Loading student list...</p>';
-
       const selectedSanstha = sansthaFilter.value;
+
       const holidaySnap = await get(ref(db, `holidays/${dateStr}`));
       const attendanceSnap = await get(ref(db, `attendance/${dateStr}`));
       const dateRecords = attendanceSnap.val() || {};
 
       let isHoliday = holidaySnap.exists();
+      const toggleHolidayBtn = document.getElementById('toggleHolidayBtn');
+      const holidayReasonInput = document.getElementById('holidayReason');
+      
       if (isHoliday) {
         toggleHolidayBtn.classList.add('active');
         toggleHolidayBtn.innerText = "Remove Holiday";
@@ -424,14 +483,18 @@
         holidayReasonInput.value = "";
       }
 
-      // Filter active students by Sanstha
-      const filteredRolls = Object.keys(allStudents).filter(roll => {
-        return !selectedSanstha || allStudents[roll].sanstha === selectedSanstha;
-      });
+      const renderList = (filterQuery = "") => {
+        const filteredRolls = Object.keys(allStudents).filter(roll => {
+          const matchSanstha = !selectedSanstha || allStudents[roll].sanstha === selectedSanstha;
+          const matchQuery = allStudents[roll].name.toLowerCase().includes(filterQuery.toLowerCase()) || roll.includes(filterQuery);
+          return matchSanstha && matchQuery;
+        });
 
-      if (filteredRolls.length === 0) {
-        scrollList.innerHTML = '<p style="text-align:center; color:#ff0055;">Is Sanstha mein koi student registered nahi hai!</p>';
-      } else {
+        if (filteredRolls.length === 0) {
+          scrollList.innerHTML = '<p style="text-align:center; color:#ff0055;">No students found!</p>';
+          return;
+        }
+
         scrollList.innerHTML = '';
         filteredRolls.forEach(roll => {
           const student = allStudents[roll];
@@ -456,97 +519,124 @@
           scrollList.appendChild(row);
         });
 
-        // Add event listeners for individual status buttons in scrollable div
         scrollList.querySelectorAll('.st-btn').forEach(btn => {
           btn.addEventListener('click', (e) => {
-            if (isPast) {
-              alert("Beeti hui tareekh (Past Date) par edit nahi kar sakte!");
-              return;
-            }
-            if (isHoliday) {
-              alert("Pehle Holiday status remove karein tabhi attendance lag sakti hai!");
-              return;
-            }
+            if (isPast) return alert("Past Date cannot be edited!");
+            if (isHoliday) return alert("Remove Holiday status first!");
             const roll = e.target.getAttribute('data-roll');
             const status = e.target.getAttribute('data-status');
             updateSingleAttendance(roll, dateStr, status);
           });
         });
-      }
+      };
 
+      searchInput.oninput = (e) => renderList(e.target.value);
+      renderList();
       attendanceModal.style.display = 'flex';
     }
 
     async function updateSingleAttendance(roll, dateStr, status) {
       const studentName = allStudents[roll].name;
       const sanstha = allStudents[roll].sanstha || 'N/A';
-      
       await set(ref(db, `student_attendance/${roll}/${dateStr}`), { status, name: studentName, sanstha });
       await set(ref(db, `attendance/${dateStr}/${roll}`), { status, name: studentName, sanstha });
-
       openAttendanceModal(dateStr, false);
       renderCalendar();
+      updateDashboardCounters();
     }
 
-    // Toggle Holiday Button Handler
     document.getElementById('toggleHolidayBtn').addEventListener('click', async () => {
       if (!activeSelectedDate) return;
       const holidayRef = ref(db, `holidays/${activeSelectedDate}`);
       const snap = await get(holidayRef);
-
       if (snap.exists()) {
         await remove(holidayRef);
-        alert(`Holiday removed for ${activeSelectedDate}`);
       } else {
         const reason = document.getElementById('holidayReason').value || "Holiday";
         await set(holidayRef, { reason, markedAt: new Date().toISOString() });
-        alert(`Marked ${activeSelectedDate} as Holiday!`);
       }
       openAttendanceModal(activeSelectedDate, false);
       renderCalendar();
     });
 
-    document.getElementById('closeModalBtn').addEventListener('click', () => {
-      attendanceModal.style.display = 'none';
+    // CSV Export Feature
+    document.getElementById('btnExportCSV').addEventListener('click', async () => {
+      const year = currentDate.getFullYear();
+      const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+      const attendanceSnap = await get(ref(db, 'attendance'));
+      const data = attendanceSnap.val() || {};
+
+      let csv = 'Date,Roll,Name,Sanstha,Status\n';
+      Object.keys(data).forEach(date => {
+        if (date.startsWith(`${year}-${month}`)) {
+          Object.keys(data[date]).forEach(roll => {
+            const rec = data[date][roll];
+            csv += `"${date}","${roll}","${rec.name}","${rec.sanstha}","${rec.status}"\n`;
+          });
+        }
+      });
+
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.setAttribute('href', url);
+      a.setAttribute('download', `Attendance_${year}_${month}.csv`);
+      a.click();
     });
 
-    async function applyBulkAttendance(targetStatus) {
+    // Monthly Report View Modal
+    document.getElementById('btnViewReport').addEventListener('click', async () => {
+      const year = currentDate.getFullYear();
+      const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+      const attendanceSnap = await get(ref(db, 'attendance'));
+      const data = attendanceSnap.val() || {};
       const selectedSanstha = sansthaFilter.value;
-      if (!selectedSanstha) {
-        alert("Kripya Sanstha select karein jinki bulk attendance lagani hai!");
-        return;
-      }
-      const matchingRolls = Object.keys(allStudents).filter(roll => allStudents[roll].sanstha === selectedSanstha);
-      if (matchingRolls.length === 0) {
-        alert("Iss Sanstha mein koi student registered nahi hai!");
-        return;
-      }
-      const now = new Date();
-      const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
-      const confirmMsg = `Kya aap "${selectedSanstha}" ke sabhi ${matchingRolls.length} students ko AAJ (${todayStr}) "${targetStatus}" mark karna chahte hain?`;
-      if (!confirm(confirmMsg)) return;
 
-      const promises = [];
-      matchingRolls.forEach(roll => {
-        const studentName = allStudents[roll].name;
-        promises.push(set(ref(db, `student_attendance/${roll}/${todayStr}`), { status: targetStatus, name: studentName, sanstha: selectedSanstha }));
-        promises.push(set(ref(db, `attendance/${todayStr}/${roll}`), { status: targetStatus, name: studentName, sanstha: selectedSanstha }));
+      const report = {};
+      Object.keys(allStudents).forEach(roll => {
+        if (!selectedSanstha || allStudents[roll].sanstha === selectedSanstha) {
+          report[roll] = { name: allStudents[roll].name, p: 0, a: 0, l: 0 };
+        }
       });
-      try {
-        await Promise.all(promises);
-        alert(`Sabhi ${matchingRolls.length} students ki attendance "${targetStatus}" mark ho gayi hai!`);
-        renderCalendar();
-      } catch (err) {
-        alert("Bulk Attendance Error: " + err.message);
-      }
-    }
 
-    document.getElementById('bulkPresentBtn').addEventListener('click', () => applyBulkAttendance('Present'));
-    document.getElementById('bulkAbsentBtn').addEventListener('click', () => applyBulkAttendance('Absent'));
+      Object.keys(data).forEach(date => {
+        if (date.startsWith(`${year}-${month}`)) {
+          Object.keys(data[date]).forEach(roll => {
+            if (report[roll]) {
+              const st = data[date][roll].status;
+              if (st === 'Present') report[roll].p++;
+              if (st === 'Absent') report[roll].a++;
+              if (st === 'Leave') report[roll].l++;
+            }
+          });
+        }
+      });
+
+      const tbody = document.getElementById('reportTableBody');
+      tbody.innerHTML = '';
+      Object.keys(report).forEach(roll => {
+        const r = report[roll];
+        const total = r.p + r.a + r.l;
+        const pct = total > 0 ? ((r.p / total) * 100).toFixed(1) : '0.0';
+        tbody.innerHTML += `
+          <tr>
+            <td>${roll}</td>
+            <td>${r.name}</td>
+            <td style="color:#00ff66;">${r.p}</td>
+            <td style="color:#ff0055;">${r.a}</td>
+            <td style="color:#ffaa00;">${r.l}</td>
+            <td style="color:#00f3ff; font-weight:bold;">${pct}%</td>
+          </tr>
+        `;
+      });
+      document.getElementById('reportModal').style.display = 'flex';
+    });
+
+    document.getElementById('closeModalBtn').onclick = () => attendanceModal.style.display = 'none';
+    document.getElementById('closeReportModalBtn').onclick = () => document.getElementById('reportModal').style.display = 'none';
     document.getElementById('studentSelect').addEventListener('change', () => { updateProfileCard(); renderCalendar(); });
     document.getElementById('prevMonth').addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() - 1); renderCalendar(); });
     document.getElementById('nextMonth').addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() + 1); renderCalendar(); });
   </script>
 </body>
 </html>
-
