@@ -4,30 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Student Registration - Ultra Neon</title>
-  <!-- Manifest File & Theme Color Link -->
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#05050a">
-  <!-- iOS App Support -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Attendance">
   <link rel="apple-touch-icon" href="https://harshitkaushal9129-bit.github.io/full-forms-for-o-level/kaushalji.png">
-
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
     body { background: #05050a; color: #fff; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; position: relative; overflow-x: hidden; }
     .neon-card { background: #0d0f1d; border: 2px solid #00f3ff; border-radius: 16px; padding: 30px; width: 100%; max-width: 500px; box-shadow: 0 0 15px #00f3ff, inset 0 0 15px #00f3ff; position: relative; z-index: 1; }
     h2 { text-align: center; color: #00f3ff; text-shadow: 0 0 10px #00f3ff; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px; }
-    
-    /* Top Highlighted Animated Neon Gmail Input Box */
-    .gmail-input-card {
-      background: #121528;
-      border-radius: 12px;
-      padding: 14px;
-      margin-bottom: 22px;
-      border: 2px solid transparent;
-      animation: neonGlow 4s linear infinite alternate;
-    }
+    .gmail-input-card { background: #121528; border-radius: 12px; padding: 14px; margin-bottom: 22px; border: 2px solid transparent; animation: neonGlow 4s linear infinite alternate; }
     @keyframes neonGlow {
       0% { border-color: #00f3ff; box-shadow: 0 0 15px #00f3ff, inset 0 0 8px #00f3ff; }
       33% { border-color: #ff007f; box-shadow: 0 0 15px #ff007f, inset 0 0 8px #ff007f; }
@@ -39,48 +27,22 @@
     .gmail-input-wrapper svg { width: 22px; height: 22px; flex-shrink: 0; }
     .gmail-input-wrapper input { width: 100%; background: transparent; border: none; outline: none; color: #fff; font-size: 14px; font-weight: 600; box-shadow: none; padding: 6px 0; }
     .gmail-input-wrapper input::placeholder { color: #7a82a6; font-weight: normal; }
-    
     .form-group { margin-bottom: 18px; }
     label { display: block; margin-bottom: 8px; color: #ff007f; font-weight: bold; text-shadow: 0 0 5px #ff007f; }
     input, select { width: 100%; padding: 12px; background: #14172b; border: 1px solid #ff007f; border-radius: 8px; color: #fff; outline: none; box-shadow: 0 0 5px #ff007f; transition: 0.3s; }
     input:focus, select:focus { border-color: #00f3ff; box-shadow: 0 0 12px #00f3ff; }
     select option { background: #0d0f1d; color: #fff; }
-    
     .img-preview { width: 90px; height: 90px; border: 2px dashed #00f3ff; border-radius: 50%; margin: 10px auto 0; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 0 8px #00f3ff; }
     .img-preview img { width: 100%; height: 100%; object-fit: cover; display: none; }
-    
     .btn { width: 100%; padding: 14px; background: transparent; border: 2px solid #00ff66; color: #00ff66; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; text-shadow: 0 0 5px #00ff66; box-shadow: 0 0 10px #00ff66; transition: 0.3s; margin-top: 10px; }
     .btn:hover { background: #00ff66; color: #000; box-shadow: 0 0 25px #00ff66; }
     .btn:disabled { opacity: 0.5; cursor: not-allowed; }
     .nav-btn { border-color: #ff007f; color: #ff007f; text-shadow: 0 0 5px #ff007f; box-shadow: 0 0 10px #ff007f; }
     .nav-btn:hover { background: #ff007f; color: #fff; box-shadow: 0 0 25px #ff007f; }
-    
-    /* Toggle Panel Button Style */
-    .view-list-btn {
-      width: 100%;
-      background: rgba(0, 243, 255, 0.1);
-      border: 1px dashed #00f3ff;
-      color: #00f3ff;
-      padding: 8px 12px;
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 8px;
-      transition: 0.3s;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    .view-list-btn:hover {
-      background: #00f3ff;
-      color: #000;
-      box-shadow: 0 0 10px #00f3ff;
-    }
-
+    .view-list-btn { width: 100%; background: rgba(0, 243, 255, 0.1); border: 1px dashed #00f3ff; color: #00f3ff; padding: 8px 12px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; margin-top: 8px; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; }
+    .view-list-btn:hover { background: #00f3ff; color: #000; box-shadow: 0 0 10px #00f3ff; }
     #msg { text-align: center; margin-top: 15px; font-weight: bold; }
     #newSansthaBox { background: #101426; padding: 12px; border: 1px dashed #00f3ff; border-radius: 8px; margin-top: 8px; display: none; }
-    
-    /* Live Student Search Preview Card */
     #studentPreviewCard { display: none; background: linear-gradient(135deg, #13172e, #1a1f3c); border: 1.5px solid #00f3ff; border-radius: 12px; padding: 12px; margin-top: 10px; box-shadow: 0 0 12px rgba(0, 243, 255, 0.4); animation: fadeIn 0.3s ease-in-out; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
     .preview-header { font-size: 11px; font-weight: bold; color: #ffcc00; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; text-shadow: 0 0 5px #ffcc00; }
@@ -89,118 +51,28 @@
     .preview-details { font-size: 13px; line-height: 1.4; color: #e0e0e0; }
     .preview-details strong { color: #00ff66; font-size: 14px; }
     .preview-tag { display: inline-block; background: rgba(0, 243, 255, 0.15); color: #00f3ff; padding: 2px 6px; border-radius: 4px; font-size: 11px; margin-top: 4px; border: 1px solid #00f3ff; }
-
-    /* Side Sliding Drawer Panel for Registered Students List */
-    .side-panel {
-      position: fixed;
-      top: 0;
-      right: -360px;
-      width: 350px;
-      height: 100vh;
-      background: #0b0d1b;
-      border-left: 2px solid #00f3ff;
-      box-shadow: -5px 0 20px rgba(0, 243, 255, 0.4);
-      z-index: 999;
-      transition: right 0.4s ease-in-out;
-      display: flex;
-      flex-direction: column;
-      padding: 20px;
-    }
-    .side-panel.open {
-      right: 0;
-    }
-    .panel-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #ff007f;
-      padding-bottom: 12px;
-      margin-bottom: 15px;
-    }
-    .panel-header h3 {
-      color: #00f3ff;
-      font-size: 16px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      text-shadow: 0 0 5px #00f3ff;
-    }
-    .close-btn {
-      background: transparent;
-      border: none;
-      color: #ff007f;
-      font-size: 22px;
-      font-weight: bold;
-      cursor: pointer;
-      text-shadow: 0 0 8px #ff007f;
-    }
-    .student-count-badge {
-      background: #00ff66;
-      color: #000;
-      font-size: 11px;
-      font-weight: bold;
-      padding: 3px 8px;
-      border-radius: 12px;
-      margin-left: 6px;
-    }
-    .panel-body {
-      flex: 1;
-      overflow-y: auto;
-      padding-right: 5px;
-    }
-    /* Scrollbar styling */
+    .side-panel { position: fixed; top: 0; right: -380px; width: 360px; height: 100vh; background: #0b0d1b; border-left: 2px solid #00f3ff; box-shadow: -5px 0 20px rgba(0, 243, 255, 0.4); z-index: 999; transition: right 0.4s ease-in-out; display: flex; flex-direction: column; padding: 20px; }
+    .side-panel.open { right: 0; }
+    .panel-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ff007f; padding-bottom: 12px; margin-bottom: 15px; }
+    .panel-header h3 { color: #00f3ff; font-size: 16px; text-transform: uppercase; letter-spacing: 1px; text-shadow: 0 0 5px #00f3ff; }
+    .close-btn { background: transparent; border: none; color: #ff007f; font-size: 22px; font-weight: bold; cursor: pointer; text-shadow: 0 0 8px #ff007f; }
+    .student-count-badge { background: #00ff66; color: #000; font-size: 11px; font-weight: bold; padding: 3px 8px; border-radius: 12px; margin-left: 6px; }
+    .panel-body { flex: 1; overflow-y: auto; padding-right: 5px; }
     .panel-body::-webkit-scrollbar { width: 6px; }
     .panel-body::-webkit-scrollbar-track { background: #080a14; }
     .panel-body::-webkit-scrollbar-thumb { background: #00f3ff; border-radius: 4px; }
-    
-    .panel-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: #14172b;
-      border: 1px solid rgba(255, 0, 127, 0.4);
-      padding: 10px;
-      border-radius: 10px;
-      margin-bottom: 10px;
-      transition: 0.2s;
-    }
-    .panel-item:hover {
-      border-color: #00f3ff;
-      box-shadow: 0 0 8px rgba(0, 243, 255, 0.4);
-    }
-    .panel-item img {
-      width: 45px;
-      height: 45px;
-      border-radius: 50%;
-      border: 1.5px solid #00f3ff;
-      object-fit: cover;
-      flex-shrink: 0;
-    }
-    .panel-item-info {
-      font-size: 12px;
-      color: #ccc;
-      line-height: 1.3;
-    }
-    .panel-item-info strong {
-      color: #fff;
-      font-size: 13px;
-    }
-    .panel-item-info span {
-      color: #00ff66;
-    }
-
-    @media (max-width: 480px) {
-      .side-panel {
-        width: 100%;
-        right: -100%;
-      }
-    }
+    .panel-item { display: flex; align-items: center; gap: 12px; background: #14172b; border: 1px solid rgba(255, 0, 127, 0.4); padding: 10px; border-radius: 10px; margin-bottom: 10px; transition: 0.2s; }
+    .panel-item:hover { border-color: #00f3ff; box-shadow: 0 0 8px rgba(0, 243, 255, 0.4); }
+    .panel-item img { width: 48px; height: 48px; border-radius: 50%; border: 1.5px solid #00f3ff; object-fit: cover; flex-shrink: 0; }
+    .panel-item-info { font-size: 12px; color: #ccc; line-height: 1.4; word-break: break-word; }
+    .panel-item-info strong { color: #fff; font-size: 14px; }
+    .panel-item-info span { color: #00ff66; }
+    @media (max-width: 480px) { .side-panel { width: 100%; right: -100%; } }
   </style>
 </head>
 <body>
-
   <div class="neon-card">
     <form id="regForm" onkeydown="return event.key != 'Enter';">
-      <!-- Top Highlighted Animated Neon Gmail Input Box -->
       <div class="gmail-input-card">
         <span class="gmail-label-tag">Gmail ID for Authentication</span>
         <div class="gmail-input-wrapper">
@@ -235,14 +107,9 @@
       
       <div class="form-group">
         <label>Full Name</label>
-        <!-- Dynamic Dropdown List Attached -->
         <input type="text" id="name" list="studentNamesList" placeholder="Enter Full Name" autocomplete="off" required>
         <datalist id="studentNamesList"></datalist>
-        
-        <!-- Button to open slide side panel -->
         <button type="button" class="view-list-btn" id="openPanelBtn">📋 View Registered Students List</button>
-        
-        <!-- Colorful Live Preview Card Container -->
         <div id="studentPreviewCard"></div>
       </div>
 
@@ -266,23 +133,19 @@
     <div id="msg"></div>
   </div>
 
-  <!-- Side Panel Container for Registered Students -->
   <div class="side-panel" id="sidePanel">
     <div class="panel-header">
       <h3>Registered Students <span class="student-count-badge" id="totalCount">0</span></h3>
       <button type="button" class="close-btn" id="closePanelBtn">&times;</button>
     </div>
-    <div class="panel-body" id="panelStudentList">
-      <!-- Dynamic Student Items Rendered Here -->
-    </div>
+    <div class="panel-body" id="panelStudentList"></div>
   </div>
 
   <script type="module">
-    // Register Service Worker for PWA / Offline support
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js')
-          .then(reg => console.log('Service Worker Registered Successfully:', reg.scope))
+          .then(reg => console.log('Service Worker Registered:', reg.scope))
           .catch(err => console.error('Service Worker Registration Failed:', err));
       });
     }
@@ -312,18 +175,15 @@
     const submitBtn = document.getElementById('submitBtn');
     const studentNamesList = document.getElementById('studentNamesList');
     const nameInput = document.getElementById('name');
-    
     const sidePanel = document.getElementById('sidePanel');
     const openPanelBtn = document.getElementById('openPanelBtn');
     const closePanelBtn = document.getElementById('closePanelBtn');
     const panelStudentList = document.getElementById('panelStudentList');
     const totalCount = document.getElementById('totalCount');
 
-    // Toggle Side Drawer Panel
     openPanelBtn.addEventListener('click', () => sidePanel.classList.add('open'));
     closePanelBtn.addEventListener('click', () => sidePanel.classList.remove('open'));
 
-    // Fetch Sansthas from Realtime Database
     onValue(ref(db, 'sansthas'), (snap) => {
       sansthaMap = snap.val() || {};
       sansthaSelect.innerHTML = '<option value="">-- Choose Sanstha --</option>';
@@ -339,49 +199,51 @@
       sansthaSelect.appendChild(addNewOpt);
     });
 
-    // Populate Registered Students into Datalist, Map & Drawer List
     onValue(ref(db, 'students'), (snap) => {
       studentsDataMap = snap.val() || {};
       studentNamesList.innerHTML = '';
       panelStudentList.innerHTML = '';
       existingStudentNames = [];
-      
-      const studentArray = Object.values(studentsDataMap);
-      totalCount.innerText = studentArray.length;
+      const studentKeys = Object.keys(studentsDataMap);
+      totalCount.innerText = studentKeys.length;
 
-      if (studentArray.length === 0) {
+      if (studentKeys.length === 0) {
         panelStudentList.innerHTML = '<div style="text-align:center; color:#888; margin-top:20px;">Koi Students Registered Nahi Hain.</div>';
         return;
       }
 
-      studentArray.forEach(student => {
-        if (student.name) {
-          existingStudentNames.push(student.name.toLowerCase());
+      studentKeys.forEach(rollKey => {
+        const student = studentsDataMap[rollKey];
+        if (student && (student.name || student.roll)) {
+          const studentName = student.name || "N/A";
+          const studentRoll = student.roll || rollKey;
+          existingStudentNames.push(studentName.toLowerCase());
           
-          // Datalist Entry
           const option = document.createElement('option');
-          option.value = student.name;
-          option.label = `Roll: ${student.roll || 'N/A'}`;
+          option.value = studentName;
+          option.label = `Roll: ${studentRoll}`;
           studentNamesList.appendChild(option);
 
-          // Side Panel List Entry
           const photoUrl = student.photo || 'https://via.placeholder.com/150/14172b/00f3ff?text=No+Pic';
           const itemDiv = document.createElement('div');
           itemDiv.className = 'panel-item';
           itemDiv.innerHTML = `
-            <img src="${photoUrl}" alt="${student.name}">
+            <img src="${photoUrl}" alt="${studentName}">
             <div class="panel-item-info">
-              <strong>${student.name}</strong><br>
-              Roll: <span>${student.roll || 'N/A'}</span> | ${student.course || 'N/A'}<br>
-              <small style="color:#888;">Sanstha: ${student.sanstha || 'N/A'}</small>
+              <strong>${studentName}</strong><br>
+              Roll: <span>${studentRoll}</span> | Course: ${student.course || 'N/A'}<br>
+              <small style="color:#00f3ff;">Sanstha: ${student.sanstha || 'N/A'}</small><br>
+              <small style="color:#aaa;">Email: ${student.email || 'N/A'}</small>
             </div>
           `;
           panelStudentList.appendChild(itemDiv);
         }
       });
+    }, (error) => {
+      console.error("Firebase fetch error:", error);
+      panelStudentList.innerHTML = '<div style="text-align:center; color:#ff0055; margin-top:20px;">Data Load karne me error aaya. Database Rules Check karein!</div>';
     });
 
-    // Live Warning Alert & Student Preview Card on Name Search
     nameInput.addEventListener('input', () => {
       const typedName = nameInput.value.trim().toLowerCase();
       const previewCard = document.getElementById('studentPreviewCard');
@@ -393,7 +255,7 @@
         return;
       }
       const matchedStudent = Object.values(studentsDataMap).find(
-        st => st.name && st.name.toLowerCase() === typedName
+        st => st && st.name && st.name.toLowerCase() === typedName
       );
       if (matchedStudent) {
         const photoUrl = matchedStudent.photo || 'https://via.placeholder.com/150/14172b/00f3ff?text=No+Pic';
@@ -424,7 +286,6 @@
       newSansthaBox.style.display = (sansthaSelect.value === "__ADD_NEW__") ? "block" : "none";
     });
 
-    // Compress Image Before Storage
     document.getElementById('photo').addEventListener('change', function(e) {
       const file = e.target.files[0];
       if (file) {
@@ -455,7 +316,6 @@
       }
     });
 
-    // Form Submission Logic
     submitBtn.addEventListener('click', async () => {
       const msg = document.getElementById('msg');
       msg.innerText = "";
@@ -474,7 +334,6 @@
         return;
       }
 
-      // Sanitize Roll for Firebase Keys
       const safeRoll = rawRoll.replace(/[.#$\[\]]/g, "_");
       submitBtn.disabled = true;
       submitBtn.innerText = "Registering...";
@@ -493,7 +352,6 @@
           await set(ref(db, `sansthas/${sName}`), { password: sPass });
         }
 
-        // Prevent Duplicate Overwriting Prompt
         const existingStudent = await get(ref(db, `students/${safeRoll}`));
         if (existingStudent.exists()) {
           const confirmOverwrite = confirm(`Roll Number "${rawRoll}" pehle se registered hai. Kya aap isko update karna chahte hain?`);
@@ -504,7 +362,6 @@
           }
         }
 
-        // Save Student Data into Firebase
         await set(ref(db, 'students/' + safeRoll), {
           email: email,
           sanstha: targetSanstha,
@@ -519,7 +376,6 @@
         msg.style.color = '#00ff66';
         msg.innerText = "Student Registered Successfully!";
 
-        // Reset Form
         document.getElementById('regForm').reset();
         document.getElementById('studentPreviewCard').style.display = "none";
         newSansthaBox.style.display = "none";
