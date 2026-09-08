@@ -4,11 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Student Registration - Ultra Neon</title>
-  
   <!-- Manifest File & Theme Color Link -->
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#05050a">
-
   <!-- iOS App Support -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -20,7 +18,6 @@
     body { background: #05050a; color: #fff; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
     .neon-card { background: #0d0f1d; border: 2px solid #00f3ff; border-radius: 16px; padding: 30px; width: 100%; max-width: 500px; box-shadow: 0 0 15px #00f3ff, inset 0 0 15px #00f3ff; }
     h2 { text-align: center; color: #00f3ff; text-shadow: 0 0 10px #00f3ff; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px; }
-
     /* Top Highlighted Animated Neon Gmail Input Box */
     .gmail-input-card {
       background: #121528;
@@ -30,71 +27,17 @@
       border: 2px solid transparent;
       animation: neonGlow 4s linear infinite alternate;
     }
-
     @keyframes neonGlow {
-      0% {
-        border-color: #00f3ff;
-        box-shadow: 0 0 15px #00f3ff, inset 0 0 8px #00f3ff;
-      }
-      33% {
-        border-color: #ff007f;
-        box-shadow: 0 0 15px #ff007f, inset 0 0 8px #ff007f;
-      }
-      66% {
-        border-color: #00ff66;
-        box-shadow: 0 0 15px #00ff66, inset 0 0 8px #00ff66;
-      }
-      100% {
-        border-color: #ff00ff;
-        box-shadow: 0 0 15px #ff00ff, inset 0 0 8px #ff00ff;
-      }
+      0% { border-color: #00f3ff; box-shadow: 0 0 15px #00f3ff, inset 0 0 8px #00f3ff; }
+      33% { border-color: #ff007f; box-shadow: 0 0 15px #ff007f, inset 0 0 8px #ff007f; }
+      66% { border-color: #00ff66; box-shadow: 0 0 15px #00ff66, inset 0 0 8px #00ff66; }
+      100% { border-color: #ff00ff; box-shadow: 0 0 15px #ff00ff, inset 0 0 8px #ff00ff; }
     }
-
-    .gmail-label-tag {
-      font-size: 11px;
-      font-weight: 800;
-      color: #00ff66;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      text-shadow: 0 0 5px #00ff66;
-      display: block;
-      margin-bottom: 6px;
-    }
-
-    .gmail-input-wrapper {
-      display: flex;
-      align-items: center;
-      background: #191c33;
-      border: 1px solid #00f3ff;
-      border-radius: 8px;
-      padding: 6px 12px;
-      gap: 10px;
-      box-shadow: 0 0 8px rgba(0, 243, 255, 0.3);
-    }
-
-    .gmail-input-wrapper svg {
-      width: 22px;
-      height: 22px;
-      flex-shrink: 0;
-    }
-
-    .gmail-input-wrapper input {
-      width: 100%;
-      background: transparent;
-      border: none;
-      outline: none;
-      color: #fff;
-      font-size: 14px;
-      font-weight: 600;
-      box-shadow: none;
-      padding: 6px 0;
-    }
-
-    .gmail-input-wrapper input::placeholder {
-      color: #7a82a6;
-      font-weight: normal;
-    }
-
+    .gmail-label-tag { font-size: 11px; font-weight: 800; color: #00ff66; text-transform: uppercase; letter-spacing: 1px; text-shadow: 0 0 5px #00ff66; display: block; margin-bottom: 6px; }
+    .gmail-input-wrapper { display: flex; align-items: center; background: #191c33; border: 1px solid #00f3ff; border-radius: 8px; padding: 6px 12px; gap: 10px; box-shadow: 0 0 8px rgba(0, 243, 255, 0.3); }
+    .gmail-input-wrapper svg { width: 22px; height: 22px; flex-shrink: 0; }
+    .gmail-input-wrapper input { width: 100%; background: transparent; border: none; outline: none; color: #fff; font-size: 14px; font-weight: 600; box-shadow: none; padding: 6px 0; }
+    .gmail-input-wrapper input::placeholder { color: #7a82a6; font-weight: normal; }
     .form-group { margin-bottom: 18px; }
     label { display: block; margin-bottom: 8px; color: #ff007f; font-weight: bold; text-shadow: 0 0 5px #ff007f; }
     input, select { width: 100%; padding: 12px; background: #14172b; border: 1px solid #ff007f; border-radius: 8px; color: #fff; outline: none; box-shadow: 0 0 5px #ff007f; transition: 0.3s; }
@@ -109,11 +52,19 @@
     .nav-btn:hover { background: #ff007f; color: #fff; box-shadow: 0 0 25px #ff007f; }
     #msg { text-align: center; margin-top: 15px; font-weight: bold; }
     #newSansthaBox { background: #101426; padding: 12px; border: 1px dashed #00f3ff; border-radius: 8px; margin-top: 8px; display: none; }
+    /* Live Student Search Preview Card */
+    #studentPreviewCard { display: none; background: linear-gradient(135deg, #13172e, #1a1f3c); border: 1.5px solid #00f3ff; border-radius: 12px; padding: 12px; margin-top: 10px; box-shadow: 0 0 12px rgba(0, 243, 255, 0.4); animation: fadeIn 0.3s ease-in-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+    .preview-header { font-size: 11px; font-weight: bold; color: #ffcc00; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; text-shadow: 0 0 5px #ffcc00; }
+    .preview-body { display: flex; align-items: center; gap: 12px; }
+    .preview-avatar { width: 55px; height: 55px; border-radius: 50%; border: 2px solid #ff007f; object-fit: cover; box-shadow: 0 0 8px #ff007f; flex-shrink: 0; }
+    .preview-details { font-size: 13px; line-height: 1.4; color: #e0e0e0; }
+    .preview-details strong { color: #00ff66; font-size: 14px; }
+    .preview-tag { display: inline-block; background: rgba(0, 243, 255, 0.15); color: #00f3ff; padding: 2px 6px; border-radius: 4px; font-size: 11px; margin-top: 4px; border: 1px solid #00f3ff; }
   </style>
 </head>
 <body>
   <div class="neon-card">
-
     <form id="regForm" onkeydown="return event.key != 'Enter';">
       <!-- Top Highlighted Animated Neon Gmail Input Box -->
       <div class="gmail-input-card">
@@ -151,6 +102,8 @@
         <!-- Dynamic Dropdown List Attached -->
         <input type="text" id="name" list="studentNamesList" placeholder="Enter Full Name" autocomplete="off" required>
         <datalist id="studentNamesList"></datalist>
+        <!-- Colorful Live Preview Card Container -->
+        <div id="studentPreviewCard"></div>
       </div>
       <div class="form-group">
         <label>Course / Class</label>
@@ -198,6 +151,7 @@
     let compressedBase64Image = "";
     let sansthaMap = {};
     let existingStudentNames = [];
+    let studentsDataMap = {};
 
     const sansthaSelect = document.getElementById('sansthaSelect');
     const newSansthaBox = document.getElementById('newSansthaBox');
@@ -221,16 +175,14 @@
       sansthaSelect.appendChild(addNewOpt);
     });
 
-    // Populate Registered Students into Datalist Dropdown
+    // Populate Registered Students into Datalist & Store Objects Map
     onValue(ref(db, 'students'), (snap) => {
-      const studentsMap = snap.val() || {};
+      studentsDataMap = snap.val() || {};
       studentNamesList.innerHTML = '';
       existingStudentNames = [];
-
-      Object.values(studentsMap).forEach(student => {
+      Object.values(studentsDataMap).forEach(student => {
         if (student.name) {
           existingStudentNames.push(student.name.toLowerCase());
-
           const option = document.createElement('option');
           option.value = student.name;
           option.label = `Roll: ${student.roll || 'N/A'}`;
@@ -239,16 +191,42 @@
       });
     });
 
-    // Live Warning Alert if Name already exists
+    // Live Warning Alert & Student Preview Card on Name Search
     nameInput.addEventListener('input', () => {
       const typedName = nameInput.value.trim().toLowerCase();
+      const previewCard = document.getElementById('studentPreviewCard');
       const msg = document.getElementById('msg');
-
-      if (typedName && existingStudentNames.includes(typedName)) {
+      if (!typedName) {
+        previewCard.style.display = "none";
+        previewCard.innerHTML = "";
+        if (msg.innerText.includes("Warning:")) msg.innerText = "";
+        return;
+      }
+      const matchedStudent = Object.values(studentsDataMap).find(
+        st => st.name && st.name.toLowerCase() === typedName
+      );
+      if (matchedStudent) {
+        const photoUrl = matchedStudent.photo || 'https://via.placeholder.com/150/14172b/00f3ff?text=No+Pic';
+        previewCard.innerHTML = `
+          <div class="preview-header">⚠️ Already Registered Student Found!</div>
+          <div class="preview-body">
+            <img class="preview-avatar" src="${photoUrl}" alt="${matchedStudent.name}">
+            <div class="preview-details">
+              <strong>${matchedStudent.name}</strong><br>
+              <span style="color: #ff007f;">Roll:</span> ${matchedStudent.roll || 'N/A'} | 
+              <span style="color: #ff007f;">Course:</span> ${matchedStudent.course || 'N/A'}<br>
+              <span style="color: #aaa;">Email:</span> ${matchedStudent.email || 'N/A'}<br>
+              <span class="preview-tag">Sanstha: ${matchedStudent.sanstha || 'N/A'}</span>
+            </div>
+          </div>
+        `;
+        previewCard.style.display = "block";
         msg.style.color = '#ffcc00';
         msg.innerText = "Warning: Yeh Student Name pehle se list mein hai!";
-      } else if (msg.innerText.includes("Warning:")) {
-        msg.innerText = "";
+      } else {
+        previewCard.style.display = "none";
+        previewCard.innerHTML = "";
+        if (msg.innerText.includes("Warning:")) msg.innerText = "";
       }
     });
 
@@ -269,12 +247,9 @@
             const scaleSize = MAX_WIDTH / img.width;
             canvas.width = MAX_WIDTH;
             canvas.height = img.height * scaleSize;
-
             const ctx = canvas.getContext('2d');
             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
             compressedBase64Image = canvas.toDataURL('image/jpeg', 0.7);
-
             const previewImg = document.getElementById('previewImg');
             previewImg.src = compressedBase64Image;
             previewImg.style.display = "block";
@@ -294,7 +269,6 @@
     submitBtn.addEventListener('click', async () => {
       const msg = document.getElementById('msg');
       msg.innerText = "";
-
       let targetSanstha = sansthaSelect.value;
       const email = document.getElementById('email').value.trim().toLowerCase();
       const rawRoll = document.getElementById('roll').value.trim();
@@ -305,7 +279,6 @@
         alert("Kripya saari required fields bharein!");
         return;
       }
-
       if (!targetSanstha) {
         alert("Kripya Sanstha select karein ya nayi add karein!");
         return;
@@ -313,7 +286,6 @@
 
       // Sanitize Roll for Firebase Keys
       const safeRoll = rawRoll.replace(/[.#$\[\]]/g, "_");
-
       submitBtn.disabled = true;
       submitBtn.innerText = "Registering...";
 
@@ -359,6 +331,7 @@
 
         // Reset Form
         document.getElementById('regForm').reset();
+        document.getElementById('studentPreviewCard').style.display = "none";
         newSansthaBox.style.display = "none";
         document.getElementById('previewImg').style.display = "none";
         document.getElementById('placeholderText').style.display = "block";
