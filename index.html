@@ -6,15 +6,14 @@
   <title>Student Registration - Ultra Neon</title>
   
   <!-- Manifest File & Theme Color Link -->
-<!-- Manifest File & Icons -->
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#05050a">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#05050a">
 
-<!-- iOS App Support -->
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Attendance">
-<link rel="apple-touch-icon" href="https://harshitkaushal9129-bit.github.io/full-forms-for-o-level/kaushalji.png">
+  <!-- iOS App Support -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Attendance">
+  <link rel="apple-touch-icon" href="https://harshitkaushal9129-bit.github.io/full-forms-for-o-level/kaushalji.png">
 
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
@@ -105,6 +104,7 @@
     .img-preview img { width: 100%; height: 100%; object-fit: cover; display: none; }
     .btn { width: 100%; padding: 14px; background: transparent; border: 2px solid #00ff66; color: #00ff66; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; text-shadow: 0 0 5px #00ff66; box-shadow: 0 0 10px #00ff66; transition: 0.3s; margin-top: 10px; }
     .btn:hover { background: #00ff66; color: #000; box-shadow: 0 0 25px #00ff66; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
     .nav-btn { border-color: #ff007f; color: #ff007f; text-shadow: 0 0 5px #ff007f; box-shadow: 0 0 10px #ff007f; }
     .nav-btn:hover { background: #ff007f; color: #fff; box-shadow: 0 0 25px #ff007f; }
     #msg { text-align: center; margin-top: 15px; font-weight: bold; }
@@ -148,7 +148,9 @@
       </div>
       <div class="form-group">
         <label>Full Name</label>
-        <input type="text" id="name" placeholder="Enter Full Name" required>
+        <!-- Dynamic Dropdown List Attached -->
+        <input type="text" id="name" list="studentNamesList" placeholder="Enter Full Name" autocomplete="off" required>
+        <datalist id="studentNamesList"></datalist>
       </div>
       <div class="form-group">
         <label>Course / Class</label>
@@ -179,7 +181,7 @@
     }
 
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-    import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
+    import { getDatabase, ref, onValue, get, set } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyDng_-HwKeiwEnda2hvqQ8YX2I9uqrxcug",
@@ -193,12 +195,17 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    let imageBase64 = "";
+    let compressedBase64Image = "";
     let sansthaMap = {};
+    let existingStudentNames = [];
 
     const sansthaSelect = document.getElementById('sansthaSelect');
     const newSansthaBox = document.getElementById('newSansthaBox');
+    const submitBtn = document.getElementById('submitBtn');
+    const studentNamesList = document.getElementById('studentNamesList');
+    const nameInput = document.getElementById('name');
 
+    // Fetch Sansthas from Realtime Database
     onValue(ref(db, 'sansthas'), (snap) => {
       sansthaMap = snap.val() || {};
       sansthaSelect.innerHTML = '<option value="">-- Choose Sanstha --</option>';
@@ -214,39 +221,87 @@
       sansthaSelect.appendChild(addNewOpt);
     });
 
+    // Populate Registered Students into Datalist Dropdown
+    onValue(ref(db, 'students'), (snap) => {
+      const studentsMap = snap.val() || {};
+      studentNamesList.innerHTML = '';
+      existingStudentNames = [];
+
+      Object.values(studentsMap).forEach(student => {
+        if (student.name) {
+          existingStudentNames.push(student.name.toLowerCase());
+
+          const option = document.createElement('option');
+          option.value = student.name;
+          option.label = `Roll: ${student.roll || 'N/A'}`;
+          studentNamesList.appendChild(option);
+        }
+      });
+    });
+
+    // Live Warning Alert if Name already exists
+    nameInput.addEventListener('input', () => {
+      const typedName = nameInput.value.trim().toLowerCase();
+      const msg = document.getElementById('msg');
+
+      if (typedName && existingStudentNames.includes(typedName)) {
+        msg.style.color = '#ffcc00';
+        msg.innerText = "Warning: Yeh Student Name pehle se list mein hai!";
+      } else if (msg.innerText.includes("Warning:")) {
+        msg.innerText = "";
+      }
+    });
+
     sansthaSelect.addEventListener('change', () => {
       newSansthaBox.style.display = (sansthaSelect.value === "__ADD_NEW__") ? "block" : "none";
     });
 
+    // Compress Image Before Storage
     document.getElementById('photo').addEventListener('change', function(e) {
       const file = e.target.files[0];
       if (file) {
         const reader = new FileReader();
         reader.onload = function(evt) {
-          imageBase64 = evt.target.result;
-          const previewImg = document.getElementById('previewImg');
-          previewImg.src = imageBase64;
-          previewImg.style.display = "block";
-          document.getElementById('placeholderText').style.display = "none";
+          const img = new Image();
+          img.onload = function() {
+            const canvas = document.createElement('canvas');
+            const MAX_WIDTH = 300;
+            const scaleSize = MAX_WIDTH / img.width;
+            canvas.width = MAX_WIDTH;
+            canvas.height = img.height * scaleSize;
+
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+            compressedBase64Image = canvas.toDataURL('image/jpeg', 0.7);
+
+            const previewImg = document.getElementById('previewImg');
+            previewImg.src = compressedBase64Image;
+            previewImg.style.display = "block";
+            document.getElementById('placeholderText').style.display = "none";
+          };
+          img.src = evt.target.result;
         };
         reader.readAsDataURL(file);
       } else {
-        imageBase64 = "";
+        compressedBase64Image = "";
         document.getElementById('previewImg').style.display = "none";
         document.getElementById('placeholderText').style.display = "block";
       }
     });
 
-    document.getElementById('submitBtn').addEventListener('click', async () => {
+    // Form Submission Logic
+    submitBtn.addEventListener('click', async () => {
       const msg = document.getElementById('msg');
-      let targetSanstha = sansthaSelect.value;
+      msg.innerText = "";
 
+      let targetSanstha = sansthaSelect.value;
       const email = document.getElementById('email').value.trim().toLowerCase();
-      const roll = document.getElementById('roll').value.trim();
-      const name = document.getElementById('name').value.trim();
+      const rawRoll = document.getElementById('roll').value.trim();
+      const name = nameInput.value.trim();
       const course = document.getElementById('course').value.trim();
 
-      if (!email || !roll || !name || !course) {
+      if (!email || !rawRoll || !name || !course) {
         alert("Kripya saari required fields bharein!");
         return;
       }
@@ -256,40 +311,67 @@
         return;
       }
 
-      if (targetSanstha === "__ADD_NEW__") {
-        const sName = document.getElementById('newSansthaName').value.trim();
-        const sPass = document.getElementById('newSansthaPass').value.trim();
-        if (!sName || !sPass) {
-          alert("Nayi Sanstha ka naam aur Password dono likhna zaroori hai!");
-          return;
-        }
-        targetSanstha = sName;
-        await set(ref(db, `sansthas/${sName}`), { password: sPass });
-      }
+      // Sanitize Roll for Firebase Keys
+      const safeRoll = rawRoll.replace(/[.#$\[\]]/g, "_");
 
-      // Firebase Database Saving with Gmail ID
-      set(ref(db, 'students/' + roll), {
-        email: email,
-        sanstha: targetSanstha,
-        roll: roll,
-        name: name,
-        course: course,
-        photo: imageBase64 || null,
-        registeredAt: new Date().toISOString()
-      }).then(() => {
+      submitBtn.disabled = true;
+      submitBtn.innerText = "Registering...";
+
+      try {
+        if (targetSanstha === "__ADD_NEW__") {
+          const sName = document.getElementById('newSansthaName').value.trim().replace(/[.#$\[\]]/g, "_");
+          const sPass = document.getElementById('newSansthaPass').value.trim();
+          if (!sName || !sPass) {
+            alert("Nayi Sanstha ka naam aur Password dono likhna zaroori hai!");
+            submitBtn.disabled = false;
+            submitBtn.innerText = "Register Student";
+            return;
+          }
+          targetSanstha = sName;
+          await set(ref(db, `sansthas/${sName}`), { password: sPass });
+        }
+
+        // Prevent Duplicate Overwriting Prompt
+        const existingStudent = await get(ref(db, `students/${safeRoll}`));
+        if (existingStudent.exists()) {
+          const confirmOverwrite = confirm(`Roll Number "${rawRoll}" pehle se registered hai. Kya aap isko update karna chahte hain?`);
+          if (!confirmOverwrite) {
+            submitBtn.disabled = false;
+            submitBtn.innerText = "Register Student";
+            return;
+          }
+        }
+
+        // Save Student Data into Firebase
+        await set(ref(db, 'students/' + safeRoll), {
+          email: email,
+          sanstha: targetSanstha,
+          roll: rawRoll,
+          name: name,
+          course: course,
+          photo: compressedBase64Image || null,
+          registeredAt: new Date().toISOString()
+        });
+
         alert("Student Successfully Registered!");
         msg.style.color = '#00ff66';
         msg.innerText = "Student Registered Successfully!";
+
+        // Reset Form
         document.getElementById('regForm').reset();
         newSansthaBox.style.display = "none";
         document.getElementById('previewImg').style.display = "none";
         document.getElementById('placeholderText').style.display = "block";
-        imageBase64 = "";
-      }).catch((err) => {
+        compressedBase64Image = "";
+
+      } catch (err) {
         alert("Error: " + err.message);
         msg.style.color = '#ff0055';
         msg.innerText = "Error: " + err.message;
-      });
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Register Student";
+      }
     });
   </script>
 </body>
